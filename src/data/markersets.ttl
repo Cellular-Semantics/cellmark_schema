@@ -1,0 +1,93 @@
+@prefix BFO: <http://purl.obolibrary.org/obo/BFO_> .
+@prefix ms: <https://example.org/marker-sets/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ms:marker_CD19 a ms:Marker ;
+    ms:description "B-lymphocyte antigen CD19" ;
+    ms:name "CD19" .
+
+ms:marker_CD20 a ms:Marker ;
+    ms:description "B-lymphocyte surface antigen B1" ;
+    ms:name "CD20" .
+
+ms:marker_CD22 a ms:Marker ;
+    ms:description "B-cell receptor CD22" ;
+    ms:name "CD22" .
+
+ms:marker_CD3 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD3" ;
+    ms:name "CD3" .
+
+ms:marker_CD4 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD4" ;
+    ms:name "CD4" .
+
+ms:marker_CD8 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD8" ;
+    ms:name "CD8" .
+
+ms:marker_CD8neg a ms:Marker ;
+    ms:description "Absence of CD8 marker" ;
+    ms:name "CD8-negative" .
+
+ms:marker_set_CD19_CD20_CD22 a ms:MarkerSet ;
+    BFO:0000051 "ms:marker_CD19"^^xsd:anyURI,
+        "ms:marker_CD20"^^xsd:anyURI,
+        "ms:marker_CD22"^^xsd:anyURI ;
+    ms:confidence_score "0.88"^^xsd:float ;
+    ms:derived_from_markers true ;
+    ms:description "Standard B cell markers including CD19, CD20, and CD22" ;
+    ms:name "CD19+CD20+CD22+ marker set" ;
+    ms:precision "0.91"^^xsd:float ;
+    ms:recall "0.85"^^xsd:float .
+
+ms:marker_set_CD3_CD4_CD8 a ms:MarkerSet ;
+    BFO:0000051 "ms:marker_CD3"^^xsd:anyURI,
+        "ms:marker_CD4"^^xsd:anyURI,
+        "ms:marker_CD8"^^xsd:anyURI ;
+    ms:confidence_score "0.92"^^xsd:float ;
+    ms:derived_from_markers true ;
+    ms:description "Standard T cell markers including CD3, CD4, and CD8" ;
+    ms:name "CD3+CD4+CD8+ marker set" ;
+    ms:precision "0.95"^^xsd:float ;
+    ms:recall "0.89"^^xsd:float .
+
+ms:marker_set_CD3_CD4_CD8neg a ms:MarkerSet ;
+    BFO:0000051 "ms:marker_CD3"^^xsd:anyURI,
+        "ms:marker_CD4"^^xsd:anyURI,
+        "ms:marker_CD8neg"^^xsd:anyURI ;
+    ms:confidence_score "0.95"^^xsd:float ;
+    ms:derived_from_markers true ;
+    ms:description "Helper T cell marker pattern: CD3 and CD4 positive, CD8 negative" ;
+    ms:name "CD3+CD4+CD8- marker set" ;
+    ms:precision "0.97"^^xsd:float ;
+    ms:recall "0.93"^^xsd:float .
+
+[] a ms:CellMarkerData ;
+    ms:axioms [ a owl:Axiom ;
+            owl:annotatedProperty "ms:has_marker_set"^^xsd:anyURI ;
+            owl:annotatedSource "CL:0000236"^^xsd:anyURI ;
+            owl:annotatedTarget "ms:marker_set_CD19_CD20_CD22"^^xsd:anyURI ;
+            ms:annotation_confidence "0.9"^^xsd:float ],
+        [ a owl:Axiom ;
+            owl:annotatedProperty "ms:has_marker_set"^^xsd:anyURI ;
+            owl:annotatedSource "CL:0000084"^^xsd:anyURI ;
+            owl:annotatedTarget "ms:marker_set_CD3_CD4_CD8"^^xsd:anyURI ;
+            ms:annotation_confidence "0.94"^^xsd:float ],
+        [ a owl:Axiom ;
+            owl:annotatedProperty "ms:has_marker_set"^^xsd:anyURI ;
+            owl:annotatedSource "CL:0000492"^^xsd:anyURI ;
+            owl:annotatedTarget "ms:marker_set_CD3_CD4_CD8neg"^^xsd:anyURI ;
+            ms:annotation_confidence "0.96"^^xsd:float ] ;
+    ms:marker_sets ms:marker_set_CD19_CD20_CD22,
+        ms:marker_set_CD3_CD4_CD8,
+        ms:marker_set_CD3_CD4_CD8neg ;
+    ms:markers ms:marker_CD19,
+        ms:marker_CD20,
+        ms:marker_CD22,
+        ms:marker_CD3,
+        ms:marker_CD4,
+        ms:marker_CD8,
+        ms:marker_CD8neg .
+

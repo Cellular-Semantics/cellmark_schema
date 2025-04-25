@@ -24,12 +24,14 @@ default_prefix: ms
 
 classes:
 
-  # Container:
-  #   tree_root: true
-  #   slots:
-  #     - markers
-  #     - marker_sets
-  #     - axioms
+  CellMarkerData:
+    description: |
+      A document that holds all markers, marker sets, and axioms.
+    tree_root: true
+    slots:
+      - markers
+      - marker_sets
+      - axioms
 
   Marker:
     description: A specific marker that can be part of a marker set
@@ -59,6 +61,7 @@ classes:
       - description: >-
           Marker set names should typically incorporate the names of component markers
           joined with '+' or similar notation when appropriate
+    tree_root: true
         
   Axiom:
     description: An OWL axiom representing a marker set annotation
@@ -70,20 +73,20 @@ classes:
       - annotation_confidence
     
 slots:
-  # markers:
-  #   range: Marker
-  #   multivalued: true
-  #   inlined: true
+  markers:
+    range: Marker
+    multivalued: true
+    inlined_as_list: true
     
-  # marker_sets:
-  #   range: MarkerSet
-  #   multivalued: true
-  #   inlined: true
+  marker_sets:
+    range: MarkerSet
+    multivalued: true
+    inlined_as_list: true
     
-  # axioms:
-  #   range: Axiom
-  #   multivalued: true
-  #   inlined: true
+  axioms:
+    range: Axiom
+    multivalued: true
+    inlined_as_list: true
 
   id:
     identifier: true
