@@ -1,31 +1,27 @@
 # metamodel_version: 1.7.0
-enum PersonStatus
+type Axiom
   {
-    ALIVE
-    DEAD
-    UNKNOWN
+  }
+
+type Marker
+  {
+    id: Uriorcurie!
+    name: String!
+    description: String
   }
 
 type MarkerSet
   {
     id: Uriorcurie!
-    name: String
+    name: String!
     description: String
-    primaryEmail: String
-    birthDate: Date
-    ageInYears: Integer
-    vitalStatus: PersonStatus
+    hasPart: [Marker]
+    confidenceScore: Float
+    precision: Float
+    recall: Float
   }
 
-type MarkerSetCollection
+type OntologyClass
   {
-    entries: [MarkerSet]
-  }
-
-type NamedThing
-  {
-    id: Uriorcurie!
-    name: String
-    description: String
   }
 

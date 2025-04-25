@@ -1,42 +1,46 @@
 {
-  "name": "cellmark_schema",
-  "description": "This is the project description.",
-  "title": "cellmark_schema",
-  "see_also": [
-    "https://my-org.github.io/cellmark_schema"
-  ],
-  "id": "https://w3id.org/my-org/cellmark_schema",
+  "name": "cellmark-schema",
+  "description": "Schema for relating ontology classes to sets of markers via annotation properties",
+  "id": "https://example.org/cellmark",
   "imports": [
     "linkml:types"
   ],
-  "license": "MIT",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
   "prefixes": [
-    {
-      "prefix_prefix": "cellmark_schema",
-      "prefix_reference": "https://w3id.org/my-org/cellmark_schema/"
-    },
     {
       "prefix_prefix": "linkml",
       "prefix_reference": "https://w3id.org/linkml/"
     },
     {
-      "prefix_prefix": "biolink",
-      "prefix_reference": "https://w3id.org/biolink/"
+      "prefix_prefix": "owl",
+      "prefix_reference": "http://www.w3.org/2002/07/owl#"
     },
     {
-      "prefix_prefix": "schema",
-      "prefix_reference": "http://schema.org/"
+      "prefix_prefix": "rdf",
+      "prefix_reference": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     },
     {
-      "prefix_prefix": "PATO",
-      "prefix_reference": "http://purl.obolibrary.org/obo/PATO_"
+      "prefix_prefix": "rdfs",
+      "prefix_reference": "http://www.w3.org/2000/01/rdf-schema#"
     },
     {
-      "prefix_prefix": "example",
-      "prefix_reference": "https://example.org/"
+      "prefix_prefix": "xsd",
+      "prefix_reference": "http://www.w3.org/2001/XMLSchema#"
+    },
+    {
+      "prefix_prefix": "BFO",
+      "prefix_reference": "http://purl.obolibrary.org/obo/BFO_"
+    },
+    {
+      "prefix_prefix": "IAO",
+      "prefix_reference": "http://purl.obolibrary.org/obo/IAO_"
+    },
+    {
+      "prefix_prefix": "ms",
+      "prefix_reference": "https://example.org/marker-sets/"
     }
   ],
-  "default_prefix": "cellmark_schema",
+  "default_prefix": "ms",
   "default_range": "string",
   "types": [
     {
@@ -348,46 +352,17 @@
       "@type": "TypeDefinition"
     }
   ],
-  "enums": [
-    {
-      "name": "PersonStatus",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/PersonStatus",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "permissible_values": [
-        {
-          "text": "ALIVE",
-          "description": "the person is living",
-          "meaning": "PATO:0001421"
-        },
-        {
-          "text": "DEAD",
-          "description": "the person is deceased",
-          "meaning": "PATO:0001422"
-        },
-        {
-          "text": "UNKNOWN",
-          "description": "the vital status is not known",
-          "todos": [
-            "map this to an ontology"
-          ]
-        }
-      ]
-    }
-  ],
   "slots": [
     {
       "name": "id",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/id",
-      "description": "A unique identifier for a thing",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "mappings": [
-        "http://schema.org/identifier"
-      ],
-      "slot_uri": "http://schema.org/identifier",
+      "definition_uri": "https://example.org/marker-sets/id",
+      "from_schema": "https://example.org/cellmark",
+      "slot_uri": "https://example.org/marker-sets/id",
       "identifier": true,
-      "owner": "NamedThing",
+      "owner": "MarkerSet",
       "domain_of": [
-        "NamedThing"
+        "Marker",
+        "MarkerSet"
       ],
       "range": "uriorcurie",
       "required": true,
@@ -395,202 +370,241 @@
     },
     {
       "name": "name",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/name",
-      "description": "A human-readable name for a thing",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "mappings": [
-        "http://schema.org/name"
-      ],
-      "slot_uri": "http://schema.org/name",
-      "owner": "NamedThing",
+      "definition_uri": "https://example.org/marker-sets/name",
+      "from_schema": "https://example.org/cellmark",
+      "slot_uri": "https://example.org/marker-sets/name",
+      "owner": "MarkerSet",
       "domain_of": [
-        "NamedThing"
+        "Marker",
+        "MarkerSet"
       ],
       "range": "string",
+      "required": true,
       "@type": "SlotDefinition"
     },
     {
       "name": "description",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/description",
-      "description": "A human-readable description for a thing",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "mappings": [
-        "http://schema.org/description"
-      ],
-      "slot_uri": "http://schema.org/description",
-      "owner": "NamedThing",
-      "domain_of": [
-        "NamedThing"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "primary_email",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/primary_email",
-      "description": "The main email address of a person",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "mappings": [
-        "http://schema.org/email"
-      ],
-      "slot_uri": "http://schema.org/email",
+      "definition_uri": "https://example.org/marker-sets/description",
+      "from_schema": "https://example.org/cellmark",
+      "slot_uri": "https://example.org/marker-sets/description",
       "owner": "MarkerSet",
       "domain_of": [
+        "Marker",
         "MarkerSet"
       ],
       "range": "string",
       "@type": "SlotDefinition"
     },
     {
-      "name": "birth_date",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/birth_date",
-      "description": "Date on which a person is born",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "mappings": [
-        "http://schema.org/birthDate"
+      "name": "has_marker_set",
+      "definition_uri": "https://example.org/marker-sets/has_marker_set",
+      "annotations": [
+        {
+          "tag": "owl",
+          "value": "AnnotationProperty",
+          "@type": "Annotation"
+        }
       ],
-      "slot_uri": "http://schema.org/birthDate",
-      "owner": "MarkerSet",
-      "domain_of": [
-        "MarkerSet"
-      ],
-      "range": "date",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "age_in_years",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/age_in_years",
-      "description": "Number of years since birth",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "slot_uri": "https://w3id.org/my-org/cellmark_schema/age_in_years",
-      "owner": "MarkerSet",
-      "domain_of": [
-        "MarkerSet"
-      ],
-      "range": "integer",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "vital_status",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/vital_status",
-      "description": "living or dead status",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "slot_uri": "https://w3id.org/my-org/cellmark_schema/vital_status",
-      "owner": "MarkerSet",
-      "domain_of": [
-        "MarkerSet"
-      ],
-      "range": "PersonStatus",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "markerSetCollection__entries",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "slot_uri": "https://w3id.org/my-org/cellmark_schema/entries",
-      "alias": "entries",
-      "owner": "MarkerSetCollection",
-      "domain_of": [
-        "MarkerSetCollection"
-      ],
+      "description": "Relates an ontology class to a marker set",
+      "from_schema": "https://example.org/cellmark",
+      "domain": "OntologyClass",
+      "slot_uri": "https://example.org/marker-sets/has_marker_set",
+      "owner": "has_marker_set",
       "range": "MarkerSet",
       "multivalued": true,
-      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "MarkerSet_primary_email",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/primary_email",
-      "description": "The main email address of a person",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
+      "name": "has_part",
+      "definition_uri": "https://example.org/marker-sets/has_part",
+      "description": "Relates a marker set to its component markers",
+      "from_schema": "https://example.org/cellmark",
       "mappings": [
-        "http://schema.org/email"
+        "http://purl.obolibrary.org/obo/BFO_0000051"
       ],
-      "is_a": "primary_email",
       "domain": "MarkerSet",
-      "slot_uri": "http://schema.org/email",
-      "alias": "primary_email",
+      "slot_uri": "http://purl.obolibrary.org/obo/BFO_0000051",
+      "owner": "MarkerSet",
+      "domain_of": [
+        "MarkerSet"
+      ],
+      "range": "Marker",
+      "multivalued": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "confidence_score",
+      "definition_uri": "https://example.org/marker-sets/confidence_score",
+      "description": "Confidence score for the marker set or annotation",
+      "from_schema": "https://example.org/cellmark",
+      "slot_uri": "https://example.org/marker-sets/confidence_score",
+      "owner": "MarkerSet",
+      "domain_of": [
+        "MarkerSet"
+      ],
+      "range": "float",
+      "minimum_value": 0.0,
+      "maximum_value": 1.0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "precision",
+      "definition_uri": "https://example.org/marker-sets/precision",
+      "description": "Precision metric for the marker set",
+      "from_schema": "https://example.org/cellmark",
+      "domain": "MarkerSet",
+      "slot_uri": "https://example.org/marker-sets/precision",
+      "owner": "MarkerSet",
+      "domain_of": [
+        "MarkerSet"
+      ],
+      "range": "float",
+      "minimum_value": 0.0,
+      "maximum_value": 1.0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "recall",
+      "definition_uri": "https://example.org/marker-sets/recall",
+      "description": "Recall metric for the marker set",
+      "from_schema": "https://example.org/cellmark",
+      "domain": "MarkerSet",
+      "slot_uri": "https://example.org/marker-sets/recall",
+      "owner": "MarkerSet",
+      "domain_of": [
+        "MarkerSet"
+      ],
+      "range": "float",
+      "minimum_value": 0.0,
+      "maximum_value": 1.0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "annotation_confidence",
+      "definition_uri": "https://example.org/marker-sets/annotation_confidence",
+      "description": "Confidence score for an annotation axiom",
+      "from_schema": "https://example.org/cellmark",
+      "domain": "Axiom",
+      "slot_uri": "https://example.org/marker-sets/annotation_confidence",
+      "owner": "annotation_confidence",
+      "range": "float",
+      "minimum_value": 0.0,
+      "maximum_value": 1.0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "derived_from_markers",
+      "definition_uri": "https://example.org/marker-sets/derived_from_markers",
+      "annotations": [
+        {
+          "tag": "owl",
+          "value": "AnnotationProperty",
+          "@type": "Annotation"
+        }
+      ],
+      "description": "Indicates that a marker set name is derived from its component markers",
+      "from_schema": "https://example.org/cellmark",
+      "domain": "MarkerSet",
+      "slot_uri": "https://example.org/marker-sets/derived_from_markers",
+      "owner": "derived_from_markers",
+      "range": "boolean",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "MarkerSet_name",
+      "definition_uri": "https://example.org/marker-sets/name",
+      "description": "Name of the marker set, often derived from component marker names (e.g., \"CD3+CD4+CD8+ T cell markers\")",
+      "from_schema": "https://example.org/cellmark",
+      "is_a": "name",
+      "domain": "MarkerSet",
+      "slot_uri": "https://example.org/marker-sets/name",
+      "alias": "name",
       "owner": "MarkerSet",
       "domain_of": [
         "MarkerSet"
       ],
       "is_usage_slot": true,
-      "usage_slot_name": "primary_email",
+      "usage_slot_name": "name",
       "range": "string",
-      "pattern": "^\\S+@[\\S+\\.]+\\S+",
+      "required": true,
       "@type": "SlotDefinition"
     }
   ],
   "classes": [
     {
-      "name": "NamedThing",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/NamedThing",
-      "description": "A generic grouping for any identifiable entity",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
+      "name": "Axiom",
+      "definition_uri": "https://example.org/marker-sets/Axiom",
+      "description": "An OWL axiom",
+      "from_schema": "https://example.org/cellmark",
       "mappings": [
-        "schema:Thing"
+        "owl:Axiom"
       ],
+      "slot_usage": {},
+      "class_uri": "http://www.w3.org/2002/07/owl#Axiom",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "OntologyClass",
+      "definition_uri": "https://example.org/marker-sets/OntologyClass",
+      "description": "An ontology class that can be associated with marker sets",
+      "from_schema": "https://example.org/cellmark",
+      "mappings": [
+        "owl:Class"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://www.w3.org/2002/07/owl#Class",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Marker",
+      "definition_uri": "https://example.org/marker-sets/Marker",
+      "description": "A specific marker that can be part of a marker set",
+      "from_schema": "https://example.org/cellmark",
       "slots": [
         "id",
         "name",
         "description"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/Thing",
+      "class_uri": "https://example.org/marker-sets/Marker",
       "@type": "ClassDefinition"
     },
     {
       "name": "MarkerSet",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/MarkerSet",
-      "description": "Represents a MarkerSet",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "is_a": "NamedThing",
+      "definition_uri": "https://example.org/marker-sets/MarkerSet",
+      "description": "A named set of markers associated with an ontology class",
+      "from_schema": "https://example.org/cellmark",
       "slots": [
         "id",
-        "name",
+        "MarkerSet_name",
         "description",
-        "MarkerSet_primary_email",
-        "birth_date",
-        "age_in_years",
-        "vital_status"
+        "has_part",
+        "confidence_score",
+        "precision",
+        "recall"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/my-org/cellmark_schema/MarkerSet",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "MarkerSetCollection",
-      "definition_uri": "https://w3id.org/my-org/cellmark_schema/MarkerSetCollection",
-      "description": "A holder for MarkerSet objects",
-      "from_schema": "https://w3id.org/my-org/cellmark_schema",
-      "slots": [
-        "markerSetCollection__entries"
-      ],
-      "slot_usage": {},
-      "attributes": [
+      "class_uri": "https://example.org/marker-sets/MarkerSet",
+      "rules": [
         {
-          "name": "entries",
-          "range": "MarkerSet",
-          "multivalued": true,
-          "inlined": true,
-          "@type": "SlotDefinition"
+          "description": "Marker set names should typically incorporate the names of component markers joined with '+' or similar notation when appropriate",
+          "@type": "ClassRule"
         }
       ],
-      "class_uri": "https://w3id.org/my-org/cellmark_schema/MarkerSetCollection",
-      "tree_root": true,
       "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "cellmark_schema.yaml",
-  "source_file_date": "2025-04-24T13:52:25",
-  "source_file_size": 2212,
-  "generation_date": "2025-04-24T13:52:45",
+  "source_file_date": "2025-04-25T10:21:34",
+  "source_file_size": 3062,
+  "generation_date": "2025-04-25T10:23:03",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/cellmark_schema.context.jsonld",
     "https://w3id.org/linkml/types.context.jsonld",
     {
-      "@base": "https://w3id.org/my-org/cellmark_schema/"
+      "@base": "https://example.org/marker-sets/"
     }
   ]
 }

@@ -1,182 +1,237 @@
-@prefix PATO: <http://purl.obolibrary.org/obo/PATO_> .
-@prefix cellmark_schema: <https://w3id.org/my-org/cellmark_schema/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
+@prefix ms: <https://example.org/marker-sets/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema1: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-cellmark_schema:MarkerSetCollection a owl:Class,
+ms:annotation_confidence a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "annotation_confidence" ;
+    rdfs:domain ms:Axiom ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+    skos:definition "Confidence score for an annotation axiom" ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:derived_from_markers a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "derived_from_markers" ;
+    rdfs:domain ms:MarkerSet ;
+    rdfs:range linkml:Boolean ;
+    skos:definition "Indicates that a marker set name is derived from its component markers" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    ms:owl "AnnotationProperty" .
+
+ms:has_marker_set a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "has_marker_set" ;
+    rdfs:domain ms:OntologyClass ;
+    rdfs:range ms:MarkerSet ;
+    skos:definition "Relates an ontology class to a marker set" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    ms:owl "AnnotationProperty" .
+
+ms:Axiom a owl:Class,
         linkml:ClassDefinition ;
-    rdfs:label "MarkerSetCollection" ;
+    rdfs:label "Axiom" ;
+    skos:definition "An OWL axiom" ;
+    skos:exactMatch owl:Axiom ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:OntologyClass a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "OntologyClass" ;
+    skos:definition "An ontology class that can be associated with marker sets" ;
+    skos:exactMatch owl:Class ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:Marker a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Marker" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom cellmark_schema:MarkerSet ;
-            owl:onProperty cellmark_schema:entries ],
+            owl:allValuesFrom linkml:Uriorcurie ;
+            owl:onProperty ms:id ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:entries ] ;
-    skos:definition "A holder for MarkerSet objects" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
+            owl:onProperty ms:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty ms:name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty ms:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty ms:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty ms:name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty ms:id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty ms:name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty ms:id ] ;
+    skos:definition "A specific marker that can be part of a marker set" ;
+    skos:inScheme <https://example.org/cellmark> .
 
-cellmark_schema:MarkerSet a owl:Class,
+ms:has_part a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "has_part" ;
+    rdfs:domain ms:MarkerSet ;
+    rdfs:range ms:Marker ;
+    skos:definition "Relates a marker set to its component markers" ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:confidence_score a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "confidence_score" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+    skos:definition "Confidence score for the marker set or annotation" ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:precision a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "precision" ;
+    rdfs:domain ms:MarkerSet ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+    skos:definition "Precision metric for the marker set" ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:recall a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "recall" ;
+    rdfs:domain ms:MarkerSet ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:float ;
+                        owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+    skos:definition "Recall metric for the marker set" ;
+    skos:inScheme <https://example.org/cellmark> .
+
+ms:MarkerSet a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "MarkerSet" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:age_in_years ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:age_in_years ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:birth_date ],
+            owl:onProperty ms:confidence_score ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:birth_date ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom linkml:Integer ;
-            owl:onProperty cellmark_schema:age_in_years ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom cellmark_schema:PersonStatus ;
-            owl:onProperty cellmark_schema:vital_status ],
+            owl:onProperty ms:recall ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:vital_status ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:primary_email ],
+            owl:onProperty ms:name ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:vital_status ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:primary_email ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom linkml:Date ;
-            owl:onProperty cellmark_schema:birth_date ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:onDatatype xsd:string ;
-                    owl:withRestrictions ( [ xsd:pattern "^\\S+@[\\S+\\.]+\\S+" ] ) ] ;
-            owl:onProperty cellmark_schema:primary_email ],
-        cellmark_schema:NamedThing ;
-    skos:definition "Represents a MarkerSet" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
-
-cellmark_schema:NamedThing a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "NamedThing" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:name ],
+            owl:onProperty ms:has_part ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:id ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom linkml:Uriorcurie ;
-            owl:onProperty cellmark_schema:id ],
+            owl:onProperty ms:recall ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty cellmark_schema:description ],
+            owl:onProperty ms:precision ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty cellmark_schema:id ],
+            owl:onProperty ms:name ],
         [ a owl:Restriction ;
             owl:allValuesFrom linkml:String ;
-            owl:onProperty cellmark_schema:description ],
+            owl:onProperty ms:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty ms:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty ms:id ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:description ],
+            owl:onProperty ms:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty ms:confidence_score ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+            owl:onProperty ms:recall ],
         [ a owl:Restriction ;
             owl:allValuesFrom linkml:String ;
-            owl:onProperty cellmark_schema:name ],
+            owl:onProperty ms:name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Uriorcurie ;
+            owl:onProperty ms:id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty ms:id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+            owl:onProperty ms:confidence_score ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom ms:Marker ;
+            owl:onProperty ms:has_part ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( linkml:Float [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 1e+00 ] ) ] ) ] ;
+            owl:onProperty ms:precision ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty cellmark_schema:name ] ;
-    skos:definition "A generic grouping for any identifiable entity" ;
-    skos:exactMatch schema1:Thing ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
+            owl:onProperty ms:precision ] ;
+    skos:definition "A named set of markers associated with an ontology class" ;
+    skos:inScheme <https://example.org/cellmark> .
 
-PATO:0001421 a owl:Class,
-        cellmark_schema:PersonStatus ;
-    rdfs:label "ALIVE" ;
-    rdfs:subClassOf cellmark_schema:PersonStatus .
-
-PATO:0001422 a owl:Class,
-        cellmark_schema:PersonStatus ;
-    rdfs:label "DEAD" ;
-    rdfs:subClassOf cellmark_schema:PersonStatus .
-
-<https://w3id.org/my-org/cellmark_schema/PersonStatus#UNKNOWN> a owl:Class,
-        cellmark_schema:PersonStatus ;
-    rdfs:label "UNKNOWN" ;
-    rdfs:subClassOf cellmark_schema:PersonStatus .
-
-cellmark_schema:entries a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "entries" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
-
-cellmark_schema:age_in_years a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "age_in_years" ;
-    rdfs:range linkml:Integer ;
-    skos:definition "Number of years since birth" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
-
-cellmark_schema:birth_date a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "birth_date" ;
-    rdfs:range linkml:Date ;
-    skos:definition "Date on which a person is born" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
-
-cellmark_schema:description a owl:ObjectProperty,
+ms:description a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "description" ;
-    skos:definition "A human-readable description for a thing" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
+    rdfs:range linkml:String ;
+    skos:inScheme <https://example.org/cellmark> .
 
-cellmark_schema:id a owl:ObjectProperty,
+ms:id a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "id" ;
     rdfs:range linkml:Uriorcurie ;
-    skos:definition "A unique identifier for a thing" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
+    skos:inScheme <https://example.org/cellmark> .
 
-cellmark_schema:name a owl:ObjectProperty,
+ms:name a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "name" ;
-    skos:definition "A human-readable name for a thing" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
+    rdfs:range linkml:String ;
+    skos:inScheme <https://example.org/cellmark> .
 
-cellmark_schema:primary_email a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "primary_email" ;
-    skos:definition "The main email address of a person" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
-
-cellmark_schema:vital_status a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "vital_status" ;
-    rdfs:range cellmark_schema:PersonStatus ;
-    skos:definition "living or dead status" ;
-    skos:inScheme <https://w3id.org/my-org/cellmark_schema> .
-
-cellmark_schema:PersonStatus a owl:Class,
-        linkml:EnumDefinition ;
-    owl:unionOf ( PATO:0001421 PATO:0001422 <https://w3id.org/my-org/cellmark_schema/PersonStatus#UNKNOWN> ) ;
-    linkml:permissible_values PATO:0001421,
-        PATO:0001422,
-        <https://w3id.org/my-org/cellmark_schema/PersonStatus#UNKNOWN> .
-
-<https://w3id.org/my-org/cellmark_schema> a owl:Ontology ;
-    rdfs:label "cellmark_schema" ;
-    dcterms:license "MIT" ;
-    dcterms:title "cellmark_schema" ;
-    rdfs:seeAlso <https://my-org.github.io/cellmark_schema> ;
-    skos:definition "This is the project description." .
+<https://example.org/cellmark> a owl:Ontology ;
+    rdfs:label "cellmark-schema" ;
+    dcterms:license "https://creativecommons.org/publicdomain/zero/1.0/" ;
+    skos:definition "Schema for relating ontology classes to sets of markers via annotation properties" .
 

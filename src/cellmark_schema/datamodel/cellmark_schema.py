@@ -1,10 +1,10 @@
 # Auto generated from cellmark_schema.yaml by pythongen.py version: 0.0.1
-# Generation date: 2025-04-24T13:52:45
-# Schema: cellmark_schema
+# Generation date: 2025-04-25T10:23:03
+# Schema: cellmark-schema
 #
-# id: https://w3id.org/my-org/cellmark_schema
-# description: This is the project description.
-# license: MIT
+# id: https://example.org/cellmark
+# description: Schema for relating ontology classes to sets of markers via annotation properties
+# license: https://creativecommons.org/publicdomain/zero/1.0/
 
 import dataclasses
 import re
@@ -56,56 +56,84 @@ from rdflib import (
     URIRef
 )
 
-from linkml_runtime.linkml_model.types import Date, Integer, String, Uriorcurie
-from linkml_runtime.utils.metamodelcore import URIorCURIE, XSDDate
+from linkml_runtime.linkml_model.types import Boolean, Float, String, Uriorcurie
+from linkml_runtime.utils.metamodelcore import Bool, URIorCURIE
 
 metamodel_version = "1.7.0"
 version = None
 
 # Namespaces
-PATO = CurieNamespace('PATO', 'http://purl.obolibrary.org/obo/PATO_')
-BIOLINK = CurieNamespace('biolink', 'https://w3id.org/biolink/')
-CELLMARK_SCHEMA = CurieNamespace('cellmark_schema', 'https://w3id.org/my-org/cellmark_schema/')
-EXAMPLE = CurieNamespace('example', 'https://example.org/')
+BFO = CurieNamespace('BFO', 'http://purl.obolibrary.org/obo/BFO_')
+IAO = CurieNamespace('IAO', 'http://purl.obolibrary.org/obo/IAO_')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
-SCHEMA = CurieNamespace('schema', 'http://schema.org/')
-DEFAULT_ = CELLMARK_SCHEMA
+MS = CurieNamespace('ms', 'https://example.org/marker-sets/')
+OWL = CurieNamespace('owl', 'http://www.w3.org/2002/07/owl#')
+RDF = CurieNamespace('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+RDFS = CurieNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
+XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
+DEFAULT_ = MS
 
 
 # Types
 
 # Class references
-class NamedThingId(URIorCURIE):
+class MarkerId(URIorCURIE):
     pass
 
 
-class MarkerSetId(NamedThingId):
+class MarkerSetId(URIorCURIE):
     pass
 
 
-@dataclass(repr=False)
-class NamedThing(YAMLRoot):
+class Axiom(YAMLRoot):
     """
-    A generic grouping for any identifiable entity
+    An OWL axiom
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA["Thing"]
-    class_class_curie: ClassVar[str] = "schema:Thing"
-    class_name: ClassVar[str] = "NamedThing"
-    class_model_uri: ClassVar[URIRef] = CELLMARK_SCHEMA.NamedThing
+    class_class_uri: ClassVar[URIRef] = OWL["Axiom"]
+    class_class_curie: ClassVar[str] = "owl:Axiom"
+    class_name: ClassVar[str] = "Axiom"
+    class_model_uri: ClassVar[URIRef] = MS.Axiom
 
-    id: Union[str, NamedThingId] = None
-    name: Optional[str] = None
+
+class OntologyClass(YAMLRoot):
+    """
+    An ontology class that can be associated with marker sets
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = OWL["Class"]
+    class_class_curie: ClassVar[str] = "owl:Class"
+    class_name: ClassVar[str] = "OntologyClass"
+    class_model_uri: ClassVar[URIRef] = MS.OntologyClass
+
+
+@dataclass(repr=False)
+class Marker(YAMLRoot):
+    """
+    A specific marker that can be part of a marker set
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = MS["Marker"]
+    class_class_curie: ClassVar[str] = "ms:Marker"
+    class_name: ClassVar[str] = "Marker"
+    class_model_uri: ClassVar[URIRef] = MS.Marker
+
+    id: Union[str, MarkerId] = None
+    name: str = None
     description: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.id):
             self.MissingRequiredField("id")
-        if not isinstance(self.id, NamedThingId):
-            self.id = NamedThingId(self.id)
+        if not isinstance(self.id, MarkerId):
+            self.id = MarkerId(self.id)
 
-        if self.name is not None and not isinstance(self.name, str):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
             self.name = str(self.name)
 
         if self.description is not None and not isinstance(self.description, str):
@@ -115,22 +143,24 @@ class NamedThing(YAMLRoot):
 
 
 @dataclass(repr=False)
-class MarkerSet(NamedThing):
+class MarkerSet(YAMLRoot):
     """
-    Represents a MarkerSet
+    A named set of markers associated with an ontology class
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = CELLMARK_SCHEMA["MarkerSet"]
-    class_class_curie: ClassVar[str] = "cellmark_schema:MarkerSet"
+    class_class_uri: ClassVar[URIRef] = MS["MarkerSet"]
+    class_class_curie: ClassVar[str] = "ms:MarkerSet"
     class_name: ClassVar[str] = "MarkerSet"
-    class_model_uri: ClassVar[URIRef] = CELLMARK_SCHEMA.MarkerSet
+    class_model_uri: ClassVar[URIRef] = MS.MarkerSet
 
     id: Union[str, MarkerSetId] = None
-    primary_email: Optional[str] = None
-    birth_date: Optional[Union[str, XSDDate]] = None
-    age_in_years: Optional[int] = None
-    vital_status: Optional[Union[str, "PersonStatus"]] = None
+    name: str = None
+    description: Optional[str] = None
+    has_part: Optional[Union[Union[str, MarkerId], list[Union[str, MarkerId]]]] = empty_list()
+    confidence_score: Optional[float] = None
+    precision: Optional[float] = None
+    recall: Optional[float] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.id):
@@ -138,88 +168,66 @@ class MarkerSet(NamedThing):
         if not isinstance(self.id, MarkerSetId):
             self.id = MarkerSetId(self.id)
 
-        if self.primary_email is not None and not isinstance(self.primary_email, str):
-            self.primary_email = str(self.primary_email)
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
 
-        if self.birth_date is not None and not isinstance(self.birth_date, XSDDate):
-            self.birth_date = XSDDate(self.birth_date)
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
 
-        if self.age_in_years is not None and not isinstance(self.age_in_years, int):
-            self.age_in_years = int(self.age_in_years)
+        if not isinstance(self.has_part, list):
+            self.has_part = [self.has_part] if self.has_part is not None else []
+        self.has_part = [v if isinstance(v, MarkerId) else MarkerId(v) for v in self.has_part]
 
-        if self.vital_status is not None and not isinstance(self.vital_status, PersonStatus):
-            self.vital_status = PersonStatus(self.vital_status)
+        if self.confidence_score is not None and not isinstance(self.confidence_score, float):
+            self.confidence_score = float(self.confidence_score)
 
-        super().__post_init__(**kwargs)
+        if self.precision is not None and not isinstance(self.precision, float):
+            self.precision = float(self.precision)
 
-
-@dataclass(repr=False)
-class MarkerSetCollection(YAMLRoot):
-    """
-    A holder for MarkerSet objects
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CELLMARK_SCHEMA["MarkerSetCollection"]
-    class_class_curie: ClassVar[str] = "cellmark_schema:MarkerSetCollection"
-    class_name: ClassVar[str] = "MarkerSetCollection"
-    class_model_uri: ClassVar[URIRef] = CELLMARK_SCHEMA.MarkerSetCollection
-
-    entries: Optional[Union[dict[Union[str, MarkerSetId], Union[dict, MarkerSet]], list[Union[dict, MarkerSet]]]] = empty_dict()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        self._normalize_inlined_as_dict(slot_name="entries", slot_type=MarkerSet, key_name="id", keyed=True)
+        if self.recall is not None and not isinstance(self.recall, float):
+            self.recall = float(self.recall)
 
         super().__post_init__(**kwargs)
 
 
 # Enumerations
-class PersonStatus(EnumDefinitionImpl):
 
-    ALIVE = PermissibleValue(
-        text="ALIVE",
-        description="the person is living",
-        meaning=PATO["0001421"])
-    DEAD = PermissibleValue(
-        text="DEAD",
-        description="the person is deceased",
-        meaning=PATO["0001422"])
-    UNKNOWN = PermissibleValue(
-        text="UNKNOWN",
-        description="the vital status is not known")
-
-    _defn = EnumDefinition(
-        name="PersonStatus",
-    )
 
 # Slots
 class slots:
     pass
 
-slots.id = Slot(uri=SCHEMA.identifier, name="id", curie=SCHEMA.curie('identifier'),
-                   model_uri=CELLMARK_SCHEMA.id, domain=None, range=URIRef)
+slots.id = Slot(uri=MS.id, name="id", curie=MS.curie('id'),
+                   model_uri=MS.id, domain=None, range=URIRef)
 
-slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
-                   model_uri=CELLMARK_SCHEMA.name, domain=None, range=Optional[str])
+slots.name = Slot(uri=MS.name, name="name", curie=MS.curie('name'),
+                   model_uri=MS.name, domain=None, range=str)
 
-slots.description = Slot(uri=SCHEMA.description, name="description", curie=SCHEMA.curie('description'),
-                   model_uri=CELLMARK_SCHEMA.description, domain=None, range=Optional[str])
+slots.description = Slot(uri=MS.description, name="description", curie=MS.curie('description'),
+                   model_uri=MS.description, domain=None, range=Optional[str])
 
-slots.primary_email = Slot(uri=SCHEMA.email, name="primary_email", curie=SCHEMA.curie('email'),
-                   model_uri=CELLMARK_SCHEMA.primary_email, domain=None, range=Optional[str])
+slots.has_marker_set = Slot(uri=MS.has_marker_set, name="has_marker_set", curie=MS.curie('has_marker_set'),
+                   model_uri=MS.has_marker_set, domain=OntologyClass, range=Optional[Union[Union[str, MarkerSetId], list[Union[str, MarkerSetId]]]])
 
-slots.birth_date = Slot(uri=SCHEMA.birthDate, name="birth_date", curie=SCHEMA.curie('birthDate'),
-                   model_uri=CELLMARK_SCHEMA.birth_date, domain=None, range=Optional[Union[str, XSDDate]])
+slots.has_part = Slot(uri=BFO['0000051'], name="has_part", curie=BFO.curie('0000051'),
+                   model_uri=MS.has_part, domain=MarkerSet, range=Optional[Union[Union[str, MarkerId], list[Union[str, MarkerId]]]])
 
-slots.age_in_years = Slot(uri=CELLMARK_SCHEMA.age_in_years, name="age_in_years", curie=CELLMARK_SCHEMA.curie('age_in_years'),
-                   model_uri=CELLMARK_SCHEMA.age_in_years, domain=None, range=Optional[int])
+slots.confidence_score = Slot(uri=MS.confidence_score, name="confidence_score", curie=MS.curie('confidence_score'),
+                   model_uri=MS.confidence_score, domain=None, range=Optional[float])
 
-slots.vital_status = Slot(uri=CELLMARK_SCHEMA.vital_status, name="vital_status", curie=CELLMARK_SCHEMA.curie('vital_status'),
-                   model_uri=CELLMARK_SCHEMA.vital_status, domain=None, range=Optional[Union[str, "PersonStatus"]])
+slots.precision = Slot(uri=MS.precision, name="precision", curie=MS.curie('precision'),
+                   model_uri=MS.precision, domain=MarkerSet, range=Optional[float])
 
-slots.markerSetCollection__entries = Slot(uri=CELLMARK_SCHEMA.entries, name="markerSetCollection__entries", curie=CELLMARK_SCHEMA.curie('entries'),
-                   model_uri=CELLMARK_SCHEMA.markerSetCollection__entries, domain=None, range=Optional[Union[dict[Union[str, MarkerSetId], Union[dict, MarkerSet]], list[Union[dict, MarkerSet]]]])
+slots.recall = Slot(uri=MS.recall, name="recall", curie=MS.curie('recall'),
+                   model_uri=MS.recall, domain=MarkerSet, range=Optional[float])
 
-slots.MarkerSet_primary_email = Slot(uri=SCHEMA.email, name="MarkerSet_primary_email", curie=SCHEMA.curie('email'),
-                   model_uri=CELLMARK_SCHEMA.MarkerSet_primary_email, domain=MarkerSet, range=Optional[str],
-                   pattern=re.compile(r'^\S+@[\S+\.]+\S+'))
+slots.annotation_confidence = Slot(uri=MS.annotation_confidence, name="annotation_confidence", curie=MS.curie('annotation_confidence'),
+                   model_uri=MS.annotation_confidence, domain=Axiom, range=Optional[float])
+
+slots.derived_from_markers = Slot(uri=MS.derived_from_markers, name="derived_from_markers", curie=MS.curie('derived_from_markers'),
+                   model_uri=MS.derived_from_markers, domain=MarkerSet, range=Optional[Union[bool, Bool]])
+
+slots.MarkerSet_name = Slot(uri=MS.name, name="MarkerSet_name", curie=MS.curie('name'),
+                   model_uri=MS.MarkerSet_name, domain=MarkerSet, range=str)

@@ -2,7 +2,35 @@
     "$defs": {
         "Axiom": {
             "additionalProperties": false,
-            "description": "An OWL axiom",
+            "description": "An OWL axiom representing a marker set annotation",
+            "properties": {
+                "annotated_property": {
+                    "description": "The annotation property being used",
+                    "type": "string"
+                },
+                "annotated_source": {
+                    "description": "The source entity being annotated",
+                    "type": "string"
+                },
+                "annotated_target": {
+                    "description": "The target of the annotation",
+                    "type": "string"
+                },
+                "annotation_confidence": {
+                    "description": "Confidence score for an annotation axiom",
+                    "maximum": 1.0,
+                    "minimum": 0.0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "annotated_source",
+                "annotated_property",
+                "annotated_target"
+            ],
             "title": "Axiom",
             "type": "object"
         },
@@ -40,6 +68,13 @@
                     "minimum": 0.0,
                     "type": [
                         "number",
+                        "null"
+                    ]
+                },
+                "derived_from_markers": {
+                    "description": "Indicates that a marker set name is derived from its component markers",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -90,12 +125,6 @@
                 "name"
             ],
             "title": "MarkerSet",
-            "type": "object"
-        },
-        "OntologyClass": {
-            "additionalProperties": false,
-            "description": "An ontology class that can be associated with marker sets",
-            "title": "OntologyClass",
             "type": "object"
         }
     },

@@ -1,0 +1,484 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shex: <http://www.w3.org/ns/shex#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/marker-sets/cellmark-schema> a linkml:SchemaDefinition ;
+    dcterms:license "https://creativecommons.org/publicdomain/zero/1.0/" ;
+    skos:definition "Schema for relating ontology classes to sets of markers via annotation properties" ;
+    sh:declare [ sh:namespace rdfs: ;
+            sh:prefix "rdfs" ],
+        [ sh:namespace <http://purl.obolibrary.org/obo/BFO_> ;
+            sh:prefix "BFO" ],
+        [ sh:namespace <http://purl.obolibrary.org/obo/CL_> ;
+            sh:prefix "CL" ],
+        [ sh:namespace <http://purl.obolibrary.org/obo/IAO_> ;
+            sh:prefix "IAO" ],
+        [ sh:namespace owl: ;
+            sh:prefix "owl" ],
+        [ sh:namespace xsd: ;
+            sh:prefix "xsd" ],
+        [ sh:namespace linkml: ;
+            sh:prefix "linkml" ],
+        [ sh:namespace rdf: ;
+            sh:prefix "rdf" ],
+        [ sh:namespace <https://example.org/marker-sets/> ;
+            sh:prefix "ms" ] ;
+    linkml:classes <https://example.org/marker-sets/Axiom>,
+        <https://example.org/marker-sets/Marker>,
+        <https://example.org/marker-sets/MarkerSet> ;
+    linkml:default_prefix "ms" ;
+    linkml:default_range <https://example.org/marker-sets/string> ;
+    linkml:generation_date "2025-04-25T12:26:49"^^xsd:dateTime ;
+    linkml:id <https://example.org/cellmark> ;
+    linkml:imports linkml:types ;
+    linkml:metamodel_version "1.7.0" ;
+    linkml:slots <https://example.org/marker-sets/MarkerSet_name>,
+        <https://example.org/marker-sets/annotated_property>,
+        <https://example.org/marker-sets/annotated_source>,
+        <https://example.org/marker-sets/annotated_target>,
+        <https://example.org/marker-sets/annotation_confidence>,
+        <https://example.org/marker-sets/confidence_score>,
+        <https://example.org/marker-sets/derived_from_markers>,
+        <https://example.org/marker-sets/description>,
+        <https://example.org/marker-sets/has_marker_set>,
+        <https://example.org/marker-sets/has_part>,
+        <https://example.org/marker-sets/id>,
+        <https://example.org/marker-sets/name>,
+        <https://example.org/marker-sets/precision>,
+        <https://example.org/marker-sets/recall> ;
+    linkml:source_file "cellmark_schema.yaml" ;
+    linkml:source_file_date "2025-04-25T12:23:52"^^xsd:dateTime ;
+    linkml:source_file_size 3946 ;
+    linkml:types <https://example.org/marker-sets/boolean>,
+        <https://example.org/marker-sets/curie>,
+        <https://example.org/marker-sets/date>,
+        <https://example.org/marker-sets/date_or_datetime>,
+        <https://example.org/marker-sets/datetime>,
+        <https://example.org/marker-sets/decimal>,
+        <https://example.org/marker-sets/double>,
+        <https://example.org/marker-sets/float>,
+        <https://example.org/marker-sets/integer>,
+        <https://example.org/marker-sets/jsonpath>,
+        <https://example.org/marker-sets/jsonpointer>,
+        <https://example.org/marker-sets/ncname>,
+        <https://example.org/marker-sets/nodeidentifier>,
+        <https://example.org/marker-sets/objectidentifier>,
+        <https://example.org/marker-sets/sparqlpath>,
+        <https://example.org/marker-sets/string>,
+        <https://example.org/marker-sets/time>,
+        <https://example.org/marker-sets/uri>,
+        <https://example.org/marker-sets/uriorcurie> .
+
+<https://example.org/marker-sets/curie> a linkml:TypeDefinition ;
+    dcterms:conformsTo "https://www.w3.org/TR/curie/" ;
+    skos:definition "a compact URI" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"curie\"." ;
+    skos:inScheme linkml:types ;
+    skos:note "in RDF serializations this MUST be expanded to a URI",
+        "in non-RDF serializations MAY be serialized as the compact representation" ;
+    linkml:base "Curie" ;
+    linkml:definition_uri linkml:Curie ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:string .
+
+<https://example.org/marker-sets/date> a linkml:TypeDefinition ;
+    skos:definition "a date (year, month and day) in an idealized calendar" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date\".",
+        "URI is dateTime because OWL reasoners don't work with straight date or time" ;
+    skos:exactMatch schema1:Date ;
+    skos:inScheme linkml:types ;
+    linkml:base "XSDDate" ;
+    linkml:definition_uri linkml:Date ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:date .
+
+<https://example.org/marker-sets/date_or_datetime> a linkml:TypeDefinition ;
+    skos:definition "Either a date or a datetime" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date_or_datetime\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "str" ;
+    linkml:definition_uri linkml:DateOrDatetime ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri linkml:DateOrDatetime .
+
+<https://example.org/marker-sets/datetime> a linkml:TypeDefinition ;
+    skos:definition "The combination of a date and time" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"datetime\"." ;
+    skos:exactMatch schema1:DateTime ;
+    skos:inScheme linkml:types ;
+    linkml:base "XSDDateTime" ;
+    linkml:definition_uri linkml:Datetime ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:dateTime .
+
+<https://example.org/marker-sets/decimal> a linkml:TypeDefinition ;
+    skos:broadMatch schema1:Number ;
+    skos:definition "A real number with arbitrary precision that conforms to the xsd:decimal specification" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "Decimal" ;
+    linkml:definition_uri linkml:Decimal ;
+    linkml:imported_from "linkml:types" ;
+    linkml:uri xsd:decimal .
+
+<https://example.org/marker-sets/double> a linkml:TypeDefinition ;
+    skos:closeMatch schema1:Float ;
+    skos:definition "A real number that conforms to the xsd:double specification" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "float" ;
+    linkml:definition_uri linkml:Double ;
+    linkml:imported_from "linkml:types" ;
+    linkml:uri xsd:double .
+
+<https://example.org/marker-sets/integer> a linkml:TypeDefinition ;
+    skos:definition "An integer" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"integer\"." ;
+    skos:exactMatch schema1:Integer ;
+    skos:inScheme linkml:types ;
+    linkml:base "int" ;
+    linkml:definition_uri linkml:Integer ;
+    linkml:imported_from "linkml:types" ;
+    linkml:uri xsd:integer .
+
+<https://example.org/marker-sets/jsonpath> a linkml:TypeDefinition ;
+    dcterms:conformsTo "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html" ;
+    skos:definition "A string encoding a JSON Path. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded in tree form." ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpath\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "str" ;
+    linkml:definition_uri linkml:Jsonpath ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:string .
+
+<https://example.org/marker-sets/jsonpointer> a linkml:TypeDefinition ;
+    dcterms:conformsTo "https://datatracker.ietf.org/doc/html/rfc6901" ;
+    skos:definition "A string encoding a JSON Pointer. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to a valid object within the current instance document when encoded in tree form." ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpointer\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "str" ;
+    linkml:definition_uri linkml:Jsonpointer ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:string .
+
+<https://example.org/marker-sets/ncname> a linkml:TypeDefinition ;
+    skos:definition "Prefix part of CURIE" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"ncname\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "NCName" ;
+    linkml:definition_uri linkml:Ncname ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:string .
+
+<https://example.org/marker-sets/nodeidentifier> a linkml:TypeDefinition ;
+    skos:definition "A URI, CURIE or BNODE that represents a node in a model." ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"nodeidentifier\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "NodeIdentifier" ;
+    linkml:definition_uri linkml:Nodeidentifier ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri shex:nonLiteral .
+
+<https://example.org/marker-sets/objectidentifier> a linkml:TypeDefinition ;
+    skos:definition "A URI or CURIE that represents an object in the model." ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\"." ;
+    skos:inScheme linkml:types ;
+    skos:note "Used for inheritance and type checking" ;
+    linkml:base "ElementIdentifier" ;
+    linkml:definition_uri linkml:Objectidentifier ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri shex:iri .
+
+<https://example.org/marker-sets/sparqlpath> a linkml:TypeDefinition ;
+    dcterms:conformsTo "https://www.w3.org/TR/sparql11-query/#propertypaths" ;
+    skos:definition "A string encoding a SPARQL Property Path. The value of the string MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded as RDF." ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"sparqlpath\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "str" ;
+    linkml:definition_uri linkml:Sparqlpath ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:string .
+
+<https://example.org/marker-sets/time> a linkml:TypeDefinition ;
+    skos:definition "A time object represents a (local) time of day, independent of any particular day" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"time\".",
+        "URI is dateTime because OWL reasoners do not work with straight date or time" ;
+    skos:exactMatch schema1:Time ;
+    skos:inScheme linkml:types ;
+    linkml:base "XSDTime" ;
+    linkml:definition_uri linkml:Time ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:time .
+
+<https://example.org/marker-sets/uri> a linkml:TypeDefinition ;
+    dcterms:conformsTo "https://www.ietf.org/rfc/rfc3987.txt" ;
+    skos:closeMatch schema1:URL ;
+    skos:definition "a complete URI" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uri\"." ;
+    skos:inScheme linkml:types ;
+    skos:note "in RDF serializations a slot with range of uri is treated as a literal or type xsd:anyURI unless it is an identifier or a reference to an identifier, in which case it is translated directly to a node" ;
+    linkml:base "URI" ;
+    linkml:definition_uri linkml:Uri ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:anyURI .
+
+<https://example.org/marker-sets/MarkerSet_name> a linkml:SlotDefinition ;
+    skos:definition "Name of the marker set, often derived from component marker names (e.g., \"CD3+CD4+CD8+ T cell markers\")" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    skos:prefLabel "name" ;
+    linkml:definition_uri <https://example.org/marker-sets/name> ;
+    linkml:domain <https://example.org/marker-sets/MarkerSet> ;
+    linkml:domain_of <https://example.org/marker-sets/MarkerSet> ;
+    linkml:is_a <https://example.org/marker-sets/name> ;
+    linkml:is_usage_slot true ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/string> ;
+    linkml:required true ;
+    linkml:slot_uri <https://example.org/marker-sets/name> ;
+    linkml:usage_slot_name "name" .
+
+<https://example.org/marker-sets/boolean> a linkml:TypeDefinition ;
+    skos:definition "A binary (true or false) value" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\"." ;
+    skos:exactMatch schema1:Boolean ;
+    skos:inScheme linkml:types ;
+    linkml:base "Bool" ;
+    linkml:definition_uri linkml:Boolean ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "bool" ;
+    linkml:uri xsd:boolean .
+
+<https://example.org/marker-sets/annotated_property> a linkml:SlotDefinition ;
+    skos:definition "The annotation property being used" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    skos:mappingRelation owl:annotatedProperty ;
+    linkml:definition_uri <https://example.org/marker-sets/annotated_property> ;
+    linkml:domain_of <https://example.org/marker-sets/Axiom> ;
+    linkml:owner <https://example.org/marker-sets/Axiom> ;
+    linkml:range <https://example.org/marker-sets/uriorcurie> ;
+    linkml:required true ;
+    linkml:slot_uri owl:annotatedProperty .
+
+<https://example.org/marker-sets/annotated_source> a linkml:SlotDefinition ;
+    skos:definition "The source entity being annotated" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    skos:mappingRelation owl:annotatedSource ;
+    linkml:definition_uri <https://example.org/marker-sets/annotated_source> ;
+    linkml:domain_of <https://example.org/marker-sets/Axiom> ;
+    linkml:owner <https://example.org/marker-sets/Axiom> ;
+    linkml:range <https://example.org/marker-sets/uriorcurie> ;
+    linkml:required true ;
+    linkml:slot_uri owl:annotatedSource .
+
+<https://example.org/marker-sets/annotated_target> a linkml:SlotDefinition ;
+    skos:definition "The target of the annotation" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    skos:mappingRelation owl:annotatedTarget ;
+    linkml:definition_uri <https://example.org/marker-sets/annotated_target> ;
+    linkml:domain_of <https://example.org/marker-sets/Axiom> ;
+    linkml:owner <https://example.org/marker-sets/Axiom> ;
+    linkml:range <https://example.org/marker-sets/uriorcurie> ;
+    linkml:required true ;
+    linkml:slot_uri owl:annotatedTarget .
+
+<https://example.org/marker-sets/has_marker_set> a linkml:SlotDefinition ;
+    skos:definition "Relates an ontology class to a marker set via annotation" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:annotations [ a linkml:Annotation ;
+            skos:example "AnnotationProperty" ;
+            linkml:tag <https://example.org/marker-sets/owl> ] ;
+    linkml:definition_uri <https://example.org/marker-sets/has_marker_set> ;
+    linkml:range <https://example.org/marker-sets/MarkerSet> ;
+    linkml:slot_uri <https://example.org/marker-sets/has_marker_set> .
+
+<https://example.org/marker-sets/has_part> a linkml:SlotDefinition ;
+    skos:definition "Relates a marker set to its component markers" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    skos:mappingRelation <http://purl.obolibrary.org/obo/BFO_0000051> ;
+    linkml:definition_uri <https://example.org/marker-sets/has_part> ;
+    linkml:domain <https://example.org/marker-sets/MarkerSet> ;
+    linkml:domain_of <https://example.org/marker-sets/MarkerSet> ;
+    linkml:multivalued true ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/uriorcurie> ;
+    linkml:slot_uri <http://purl.obolibrary.org/obo/BFO_0000051> .
+
+<https://example.org/marker-sets/annotation_confidence> a linkml:SlotDefinition ;
+    skos:definition "Confidence score for an annotation axiom" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/annotation_confidence> ;
+    linkml:domain <https://example.org/marker-sets/Axiom> ;
+    linkml:domain_of <https://example.org/marker-sets/Axiom> ;
+    linkml:maximum_value "1.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:minimum_value "0.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:owner <https://example.org/marker-sets/Axiom> ;
+    linkml:range <https://example.org/marker-sets/float> ;
+    linkml:slot_uri <https://example.org/marker-sets/annotation_confidence> .
+
+<https://example.org/marker-sets/confidence_score> a linkml:SlotDefinition ;
+    skos:definition "Confidence score for the marker set or annotation" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/confidence_score> ;
+    linkml:domain_of <https://example.org/marker-sets/MarkerSet> ;
+    linkml:maximum_value "1.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:minimum_value "0.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/float> ;
+    linkml:slot_uri <https://example.org/marker-sets/confidence_score> .
+
+<https://example.org/marker-sets/derived_from_markers> a linkml:SlotDefinition ;
+    skos:definition "Indicates that a marker set name is derived from its component markers" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:annotations [ a linkml:Annotation ;
+            skos:example "AnnotationProperty" ;
+            linkml:tag <https://example.org/marker-sets/owl> ] ;
+    linkml:definition_uri <https://example.org/marker-sets/derived_from_markers> ;
+    linkml:domain <https://example.org/marker-sets/MarkerSet> ;
+    linkml:domain_of <https://example.org/marker-sets/MarkerSet> ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/boolean> ;
+    linkml:slot_uri <https://example.org/marker-sets/derived_from_markers> .
+
+<https://example.org/marker-sets/precision> a linkml:SlotDefinition ;
+    skos:definition "Precision metric for the marker set" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/precision> ;
+    linkml:domain <https://example.org/marker-sets/MarkerSet> ;
+    linkml:domain_of <https://example.org/marker-sets/MarkerSet> ;
+    linkml:maximum_value "1.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:minimum_value "0.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/float> ;
+    linkml:slot_uri <https://example.org/marker-sets/precision> .
+
+<https://example.org/marker-sets/recall> a linkml:SlotDefinition ;
+    skos:definition "Recall metric for the marker set" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/recall> ;
+    linkml:domain <https://example.org/marker-sets/MarkerSet> ;
+    linkml:domain_of <https://example.org/marker-sets/MarkerSet> ;
+    linkml:maximum_value "1.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:minimum_value "0.0"^^<https://w3id.org/linkml/@id> ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/float> ;
+    linkml:slot_uri <https://example.org/marker-sets/recall> .
+
+<https://example.org/marker-sets/description> a linkml:SlotDefinition ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/description> ;
+    linkml:domain_of <https://example.org/marker-sets/Marker>,
+        <https://example.org/marker-sets/MarkerSet> ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/string> ;
+    linkml:slot_uri <https://example.org/marker-sets/description> .
+
+<https://example.org/marker-sets/float> a linkml:TypeDefinition ;
+    skos:definition "A real number that conforms to the xsd:float specification" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"float\"." ;
+    skos:exactMatch schema1:Float ;
+    skos:inScheme linkml:types ;
+    linkml:base "float" ;
+    linkml:definition_uri linkml:Float ;
+    linkml:imported_from "linkml:types" ;
+    linkml:uri xsd:float .
+
+<https://example.org/marker-sets/id> a linkml:SlotDefinition ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/id> ;
+    linkml:domain_of <https://example.org/marker-sets/Marker>,
+        <https://example.org/marker-sets/MarkerSet> ;
+    linkml:identifier true ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/uriorcurie> ;
+    linkml:required true ;
+    linkml:slot_uri <https://example.org/marker-sets/id> .
+
+<https://example.org/marker-sets/string> a linkml:TypeDefinition ;
+    skos:definition "A character string" ;
+    skos:editorialNote "In RDF serializations, a slot with range of string is treated as a literal or type xsd:string.   If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"string\"." ;
+    skos:exactMatch schema1:Text ;
+    skos:inScheme linkml:types ;
+    linkml:base "str" ;
+    linkml:definition_uri linkml:String ;
+    linkml:imported_from "linkml:types" ;
+    linkml:uri xsd:string .
+
+<https://example.org/marker-sets/Marker> a linkml:ClassDefinition ;
+    skos:definition "A specific marker that can be part of a marker set" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:class_uri <https://example.org/marker-sets/Marker> ;
+    linkml:definition_uri <https://example.org/marker-sets/Marker> ;
+    linkml:slot_usage [ ] ;
+    linkml:slots <https://example.org/marker-sets/description>,
+        <https://example.org/marker-sets/id>,
+        <https://example.org/marker-sets/name> .
+
+<https://example.org/marker-sets/uriorcurie> a linkml:TypeDefinition ;
+    skos:definition "a URI or a CURIE" ;
+    skos:editorialNote "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uriorcurie\"." ;
+    skos:inScheme linkml:types ;
+    linkml:base "URIorCURIE" ;
+    linkml:definition_uri linkml:Uriorcurie ;
+    linkml:imported_from "linkml:types" ;
+    linkml:repr "str" ;
+    linkml:uri xsd:anyURI .
+
+<https://example.org/marker-sets/name> a linkml:SlotDefinition ;
+    skos:inScheme <https://example.org/cellmark> ;
+    linkml:definition_uri <https://example.org/marker-sets/name> ;
+    linkml:domain_of <https://example.org/marker-sets/Marker>,
+        <https://example.org/marker-sets/MarkerSet> ;
+    linkml:owner <https://example.org/marker-sets/MarkerSet> ;
+    linkml:range <https://example.org/marker-sets/string> ;
+    linkml:required true ;
+    linkml:slot_uri <https://example.org/marker-sets/name> .
+
+<https://example.org/marker-sets/Axiom> a linkml:ClassDefinition ;
+    skos:definition "An OWL axiom representing a marker set annotation" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    skos:mappingRelation owl:Axiom ;
+    linkml:class_uri owl:Axiom ;
+    linkml:definition_uri <https://example.org/marker-sets/Axiom> ;
+    linkml:slot_usage [ ] ;
+    linkml:slots <https://example.org/marker-sets/annotated_property>,
+        <https://example.org/marker-sets/annotated_source>,
+        <https://example.org/marker-sets/annotated_target>,
+        <https://example.org/marker-sets/annotation_confidence> .
+
+<https://example.org/marker-sets/MarkerSet> a linkml:ClassDefinition ;
+    skos:definition "A named set of markers associated with an ontology class" ;
+    skos:inScheme <https://example.org/cellmark> ;
+    sh:rule [ a linkml:ClassRule ;
+            skos:definition "Marker set names should typically incorporate the names of component markers joined with '+' or similar notation when appropriate" ] ;
+    linkml:class_uri <https://example.org/marker-sets/MarkerSet> ;
+    linkml:definition_uri <https://example.org/marker-sets/MarkerSet> ;
+    linkml:slot_usage [ ] ;
+    linkml:slots <https://example.org/marker-sets/MarkerSet_name>,
+        <https://example.org/marker-sets/confidence_score>,
+        <https://example.org/marker-sets/derived_from_markers>,
+        <https://example.org/marker-sets/description>,
+        <https://example.org/marker-sets/has_part>,
+        <https://example.org/marker-sets/id>,
+        <https://example.org/marker-sets/precision>,
+        <https://example.org/marker-sets/recall> .
+
+

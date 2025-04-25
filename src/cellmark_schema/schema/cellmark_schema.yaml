@@ -1,96 +1,163 @@
----
-id: https://w3id.org/my-org/cellmark_schema
-name: cellmark_schema
-title: cellmark_schema
-description: |-
-  This is the project description.
-license: MIT
-see_also:
-  - https://my-org.github.io/cellmark_schema
+# LinkML Schema for Ontology Class Marker Sets
+# This schema defines relationships between ontology classes and marker sets
+
+id: https://example.org/cellmark
+name: cellmark-schema
+description: Schema for relating ontology classes to sets of markers via annotation properties
+license: https://creativecommons.org/publicdomain/zero/1.0/
 
 prefixes:
-  cellmark_schema: https://w3id.org/my-org/cellmark_schema/
   linkml: https://w3id.org/linkml/
-  biolink: https://w3id.org/biolink/
-  schema: http://schema.org/
-  PATO: http://purl.obolibrary.org/obo/PATO_
-  example: https://example.org/
-default_prefix: cellmark_schema
-default_range: string
+  owl: http://www.w3.org/2002/07/owl#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  BFO: http://purl.obolibrary.org/obo/BFO_
+  IAO: http://purl.obolibrary.org/obo/IAO_
+  CL: http://purl.obolibrary.org/obo/CL_
+  ms: https://example.org/marker-sets/
 
 imports:
   - linkml:types
 
+default_prefix: ms
+
 classes:
 
-  NamedThing:
-    description: >-
-      A generic grouping for any identifiable entity
+  # Container:
+  #   tree_root: true
+  #   slots:
+  #     - markers
+  #     - marker_sets
+  #     - axioms
+
+  Marker:
+    description: A specific marker that can be part of a marker set
     slots:
       - id
       - name
       - description
-    class_uri: schema:Thing
-
+    
   MarkerSet:
-    is_a: NamedThing
-    description: >-
-      Represents a MarkerSet
+    description: A named set of markers associated with an ontology class
     slots:
-      - primary_email
-      - birth_date
-      - age_in_years
-      - vital_status
+      - id
+      - name
+      - description
+      - has_part
+      - derived_from_markers
+      - confidence_score
+      - precision
+      - recall
     slot_usage:
-      primary_email:
-        pattern: "^\\S+@[\\S+\\.]+\\S+"
-
-  MarkerSetCollection:
-    tree_root: true
-    description: >-
-      A holder for MarkerSet objects
-    attributes:
-      entries:
-        range: MarkerSet
-        multivalued: true
-        inlined: true
-
+      name:
+        description: >-
+          Name of the marker set, often derived from component marker names
+          (e.g., "CD3+CD4+CD8+ T cell markers")
+        required: true
+    rules:
+      - description: >-
+          Marker set names should typically incorporate the names of component markers
+          joined with '+' or similar notation when appropriate
+        
+  Axiom:
+    description: An OWL axiom representing a marker set annotation
+    class_uri: owl:Axiom
+    slots:
+      - annotated_source
+      - annotated_property
+      - annotated_target
+      - annotation_confidence
+    
 slots:
+  # markers:
+  #   range: Marker
+  #   multivalued: true
+  #   inlined: true
+    
+  # marker_sets:
+  #   range: MarkerSet
+  #   multivalued: true
+  #   inlined: true
+    
+  # axioms:
+  #   range: Axiom
+  #   multivalued: true
+  #   inlined: true
+
   id:
     identifier: true
-    slot_uri: schema:identifier
     range: uriorcurie
-    description: A unique identifier for a thing
+    required: true
+    
   name:
-    slot_uri: schema:name
-    description: A human-readable name for a thing
+    range: string
+    required: true
+    
   description:
-    slot_uri: schema:description
-    description: A human-readable description for a thing
-  primary_email:
-    slot_uri: schema:email
-    description: The main email address of a person
-  birth_date:
-    slot_uri: schema:birthDate
-    range: date
-    description: Date on which a person is born
-  age_in_years:
-    range: integer
-    description: Number of years since birth
-  vital_status:
-    range: PersonStatus
-    description: living or dead status
+    range: string
+    
+  has_marker_set:
+    description: Relates an ontology class to a marker set via annotation
+    range: MarkerSet
+    annotations:
+      owl: AnnotationProperty
 
-enums:
-  PersonStatus:
-    permissible_values:
-      ALIVE:
-        description: the person is living
-        meaning: PATO:0001421
-      DEAD:
-        description: the person is deceased
-        meaning: PATO:0001422
-      UNKNOWN:
-        description: the vital status is not known
-        todos:
-          - map this to an ontology
+  annotated_source:
+    description: The source entity being annotated
+    range: uriorcurie
+    slot_uri: owl:annotatedSource
+    required: true
+  
+  annotated_property:
+    description: The annotation property being used
+    range: uriorcurie
+    slot_uri: owl:annotatedProperty
+    required: true
+    
+  annotated_target:
+    description: The target of the annotation
+    range: uriorcurie
+    slot_uri: owl:annotatedTarget
+    required: true
+      
+  has_part:
+    description: Relates a marker set to its component markers
+    domain: MarkerSet
+    range: uriorcurie
+    multivalued: true
+    slot_uri: BFO:0000051  # BFO has_part relation
+    
+  confidence_score:
+    description: Confidence score for the marker set or annotation
+    range: float
+    minimum_value: 0.0
+    maximum_value: 1.0
+    
+  precision:
+    description: Precision metric for the marker set
+    domain: MarkerSet
+    range: float
+    minimum_value: 0.0
+    maximum_value: 1.0
+    
+  recall:
+    description: Recall metric for the marker set
+    domain: MarkerSet
+    range: float
+    minimum_value: 0.0
+    maximum_value: 1.0
+    
+  annotation_confidence:
+    description: Confidence score for an annotation axiom
+    domain: Axiom
+    range: float
+    minimum_value: 0.0
+    maximum_value: 1.0
+    
+  derived_from_markers:
+    description: Indicates that a marker set name is derived from its component markers
+    domain: MarkerSet
+    range: boolean
+    annotations:
+      owl: AnnotationProperty

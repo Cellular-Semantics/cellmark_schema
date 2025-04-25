@@ -1,11 +1,16 @@
 {
-   "PATO": "http://purl.obolibrary.org/obo/PATO_",
-   "biolink": "https://w3id.org/biolink/",
-   "cellmark_schema": "https://w3id.org/my-org/cellmark_schema/",
-   "example": "https://example.org/",
+   "BFO": "http://purl.obolibrary.org/obo/BFO_",
+   "IAO": "http://purl.obolibrary.org/obo/IAO_",
    "linkml": "https://w3id.org/linkml/",
-   "schema": "http://schema.org/",
-   "NamedThing": {
-      "@id": "schema:Thing"
+   "ms": "https://example.org/marker-sets/",
+   "owl": "http://www.w3.org/2002/07/owl#",
+   "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+   "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+   "xsd": "http://www.w3.org/2001/XMLSchema#",
+   "Axiom": {
+      "@id": "owl:Axiom"
+   },
+   "OntologyClass": {
+      "@id": "owl:Class"
    }
 }

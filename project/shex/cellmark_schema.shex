@@ -1,9 +1,9 @@
 # metamodel_version: 1.7.0
-BASE <https://w3id.org/my-org/cellmark_schema/>
+BASE <https://example.org/marker-sets/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX linkml: <https://w3id.org/linkml/>
-PREFIX schema1: <http://schema.org/>
 
 
 linkml:String xsd:string
@@ -44,32 +44,35 @@ linkml:Jsonpath xsd:string
 
 linkml:Sparqlpath xsd:string
 
+<Axiom> CLOSED {
+    (  $<Axiom_tes> rdf:type . * ;
+       rdf:type [ owl:Axiom ] ?
+    )
+}
+
+<Marker> CLOSED {
+    (  $<Marker_tes> (  <name> @linkml:String ;
+          <description> @linkml:String ?
+       ) ;
+       rdf:type [ <Marker> ]
+    )
+}
+
 <MarkerSet> CLOSED {
-    (  $<MarkerSet_tes> (  &<NamedThing_tes> ;
-          rdf:type [ schema1:Thing ] ? ;
-          schema1:email @linkml:String ? ;
-          schema1:birthDate @linkml:Date ? ;
-          <age_in_years> @linkml:Integer ? ;
-          <vital_status> [ <http://purl.obolibrary.org/obo/PATO_0001421> <http://purl.obolibrary.org/obo/PATO_0001422>
-             <https://w3id.org/my-org/cellmark_schema/PersonStatus#UNKNOWN> ] ?
+    (  $<MarkerSet_tes> (  <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <http://purl.obolibrary.org/obo/BFO_0000051> @<Marker> * ;
+          <confidence_score> @linkml:Float ? ;
+          <precision> @linkml:Float ? ;
+          <recall> @linkml:Float ?
        ) ;
        rdf:type [ <MarkerSet> ]
     )
 }
 
-<MarkerSetCollection> CLOSED {
-    (  $<MarkerSetCollection_tes> <entries> @<MarkerSet> * ;
-       rdf:type [ <MarkerSetCollection> ] ?
+<OntologyClass> CLOSED {
+    (  $<OntologyClass_tes> rdf:type . * ;
+       rdf:type [ owl:Class ] ?
     )
 }
-
-<NamedThing>  (
-    CLOSED {
-       (  $<NamedThing_tes> (  schema1:name @linkml:String ? ;
-             schema1:description @linkml:String ?
-          ) ;
-          rdf:type [ schema1:Thing ]
-       )
-    } OR @<MarkerSet>
-)
 
