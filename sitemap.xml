@@ -13,6 +13,10 @@
          <lastmod>2025-04-25</lastmod>
     </url>
     <url>
+         <loc>https://my-org.github.io/cellmark_schema/CellMarkerData/</loc>
+         <lastmod>2025-04-25</lastmod>
+    </url>
+    <url>
          <loc>https://my-org.github.io/cellmark_schema/Curie/</loc>
          <lastmod>2025-04-25</lastmod>
     </url>
@@ -113,6 +117,10 @@
          <lastmod>2025-04-25</lastmod>
     </url>
     <url>
+         <loc>https://my-org.github.io/cellmark_schema/axioms/</loc>
+         <lastmod>2025-04-25</lastmod>
+    </url>
+    <url>
          <loc>https://my-org.github.io/cellmark_schema/cellmark-schema/</loc>
          <lastmod>2025-04-25</lastmod>
     </url>
@@ -138,6 +146,14 @@
     </url>
     <url>
          <loc>https://my-org.github.io/cellmark_schema/id/</loc>
+         <lastmod>2025-04-25</lastmod>
+    </url>
+    <url>
+         <loc>https://my-org.github.io/cellmark_schema/marker_sets/</loc>
+         <lastmod>2025-04-25</lastmod>
+    </url>
+    <url>
+         <loc>https://my-org.github.io/cellmark_schema/markers/</loc>
          <lastmod>2025-04-25</lastmod>
     </url>
     <url>
