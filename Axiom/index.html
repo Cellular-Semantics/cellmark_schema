@@ -231,7 +231,21 @@
 
       Axiom : annotated_source
 
+
+
+
+    Axiom --&gt; "1" CellType : annotated_source
+    click CellType href "../CellType"
+
+
       Axiom : annotated_target
+
+
+
+
+    Axiom --&gt; "1" MarkerSet : annotated_target
+    click MarkerSet href "../MarkerSet"
+
 
       Axiom : annotation_confidence
 
@@ -251,7 +265,7 @@
 <tbody>
 <tr>
 <td><a href="../annotated_source/">annotated_source</a></td>
-<td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
+<td>1 <br/> <a href="../CellType/">CellType</a></td>
 <td>The source entity being annotated</td>
 <td>direct</td>
 </tr>
@@ -263,7 +277,7 @@
 </tr>
 <tr>
 <td><a href="../annotated_target/">annotated_target</a></td>
-<td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
+<td>1 <br/> <a href="../MarkerSet/">MarkerSet</a></td>
 <td>The target of the annotation</td>
 <td>direct</td>
 </tr>
@@ -356,7 +370,7 @@ attributes:
     owner: Axiom
     domain_of:
     - Axiom
-    range: uriorcurie
+    range: CellType
     required: true
   annotated_property:
     name: annotated_property
@@ -384,7 +398,7 @@ attributes:
     owner: Axiom
     domain_of:
     - Axiom
-    range: uriorcurie
+    range: MarkerSet
     required: true
   annotation_confidence:
     name: annotation_confidence
