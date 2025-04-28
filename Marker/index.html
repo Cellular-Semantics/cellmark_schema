@@ -256,7 +256,7 @@
 <tr>
 <td><a href="../name/">name</a></td>
 <td>1 <br/> <a href="../String/">String</a></td>
-<td></td>
+<td>Name of the marker set, often derived from component marker names (e</td>
 <td>direct</td>
 </tr>
 <tr>
@@ -281,6 +281,12 @@
 <tr>
 <td><a href="../CellMarkerData/">CellMarkerData</a></td>
 <td><a href="../markers/">markers</a></td>
+<td>range</td>
+<td><a href="./">Marker</a></td>
+</tr>
+<tr>
+<td><a href="../MarkerSet/">MarkerSet</a></td>
+<td><a href="../has_part/">has_part</a></td>
 <td>range</td>
 <td><a href="./">Marker</a></td>
 </tr>
@@ -338,12 +344,15 @@ attributes:
     alias: id
     owner: Marker
     domain_of:
+    - CellType
     - Marker
     - MarkerSet
     range: uriorcurie
     required: true
   name:
     name: name
+    description: Name of the marker set, often derived from component marker names
+      (e.g., "CD3+CD4+CD8+ T cell markers")
     from_schema: https://example.org/cellmark
     rank: 1000
     alias: name

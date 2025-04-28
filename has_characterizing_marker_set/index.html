@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://my-org.github.io/cellmark_schema/id/">
+        <link rel="canonical" href="https://my-org.github.io/cellmark_schema/has_characterizing_marker_set/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Slot: id - cellmark_schema</title>
+        <title>Slot: has_characterizing_marker_set - cellmark_schema</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#slot-id" class="md-skip">
+        <a href="#slot-has_characterizing_marker_set" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Slot: id
+              Slot: has_characterizing_marker_set
             
           </span>
         </div>
@@ -314,6 +314,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Annotations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#schema-source" class="md-nav__link">
     <span class="md-ellipsis">
       Schema Source
@@ -364,9 +373,10 @@
   
 
 
-<h1 id="slot-id">Slot: id</h1>
-<p>URI: <a href="https://example.org/marker-sets/id">ms:id</a>
-Alias: id</p>
+<h1 id="slot-has_characterizing_marker_set">Slot: has_characterizing_marker_set</h1>
+<p><em>Relates a cell type to a marker set that has been experimentally validated</em></p>
+<p>URI: <a href="http://purl.obolibrary.org/obo/RO_0015004">RO:0015004</a>
+Alias: has_characterizing_marker_set</p>
 <!-- no inheritance hierarchy -->
 
 <h2 id="applicable-classes">Applicable Classes</h2>
@@ -380,32 +390,32 @@ Alias: id</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../MarkerSet/">MarkerSet</a></td>
-<td>A named set of markers associated with an ontology class</td>
-<td>no</td>
-</tr>
-<tr>
 <td><a href="../CellType/">CellType</a></td>
 <td>A reference to a Cell Ontology (CL) term</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../Marker/">Marker</a></td>
-<td>A specific marker that can be part of a marker set</td>
 <td>no</td>
 </tr>
 </tbody>
 </table>
 <h2 id="properties">Properties</h2>
 <ul>
-<li>
-<p>Range: <a href="../Uriorcurie/">Uriorcurie</a></p>
-</li>
-<li>
-<p>Required: True</p>
-</li>
+<li>Range: <a href="../MarkerSet/">MarkerSet</a></li>
 </ul>
 <h2 id="identifier-and-mapping-information">Identifier and Mapping Information</h2>
+<h3 id="annotations">Annotations</h3>
+<table>
+<thead>
+<tr>
+<th>property</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>owl</td>
+<td>ObjectProperty</td>
+</tr>
+</tbody>
+</table>
 <h3 id="schema-source">Schema Source</h3>
 <ul>
 <li>from schema: https://example.org/cellmark</li>
@@ -421,28 +431,31 @@ Alias: id</p>
 <tbody>
 <tr>
 <td>self</td>
-<td>ms:id</td>
+<td>RO:0015004</td>
 </tr>
 <tr>
 <td>native</td>
-<td>ms:id</td>
+<td>ms:has_characterizing_marker_set</td>
 </tr>
 </tbody>
 </table>
 <h2 id="linkml-source">LinkML Source</h2>
 <details>
 
-<pre><code class="language-yaml">name: id
+<pre><code class="language-yaml">name: has_characterizing_marker_set
+annotations:
+  owl:
+    tag: owl
+    value: ObjectProperty
+description: Relates a cell type to a marker set that has been experimentally validated
 from_schema: https://example.org/cellmark
 rank: 1000
-identifier: true
-alias: id
+domain: CellType
+slot_uri: RO:0015004
+alias: has_characterizing_marker_set
 domain_of:
 - CellType
-- Marker
-- MarkerSet
-range: uriorcurie
-required: true
+range: MarkerSet
 
 </code></pre>
 

@@ -304,6 +304,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#identifier-and-mapping-information" class="md-nav__link">
     <span class="md-ellipsis">
       Identifier and Mapping Information
@@ -365,7 +374,7 @@
 
 
 <h1 id="slot-annotated_property">Slot: annotated_property</h1>
-<p><em>The annotation property being used</em></p>
+<p><em>The annotation property being used (has_characterizing_marker_set)</em></p>
 <p>URI: <a href="http://www.w3.org/2002/07/owl#annotatedProperty">owl:annotatedProperty</a>
 Alias: annotated_property</p>
 <!-- no inheritance hierarchy -->
@@ -395,7 +404,23 @@ Alias: annotated_property</p>
 <li>
 <p>Required: True</p>
 </li>
+<li>
+<p>Regex pattern: <code>^RO:0015004$</code></p>
+</li>
 </ul>
+<h2 id="examples">Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RO:0015004</td>
+</tr>
+</tbody>
+</table>
 <h2 id="identifier-and-mapping-information">Identifier and Mapping Information</h2>
 <h3 id="schema-source">Schema Source</h3>
 <ul>
@@ -424,7 +449,10 @@ Alias: annotated_property</p>
 <details>
 
 <pre><code class="language-yaml">name: annotated_property
-description: The annotation property being used
+description: The annotation property being used (has_characterizing_marker_set)
+examples:
+- value: RO:0015004
+  description: has characterizing marker set
 from_schema: https://example.org/cellmark
 rank: 1000
 slot_uri: owl:annotatedProperty
@@ -433,6 +461,7 @@ domain_of:
 - Axiom
 range: uriorcurie
 required: true
+pattern: ^RO:0015004$
 
 </code></pre>
 

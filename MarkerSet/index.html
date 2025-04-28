@@ -235,6 +235,13 @@
 
       MarkerSet : has_part
 
+
+
+
+    MarkerSet --&gt; "*" Marker : has_part
+    click Marker href "../Marker"
+
+
       MarkerSet : id
 
       MarkerSet : name
@@ -277,7 +284,7 @@
 </tr>
 <tr>
 <td><a href="../has_part/">has_part</a></td>
-<td>* <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
+<td>* <br/> <a href="../Marker/">Marker</a></td>
 <td>Relates a marker set to its component markers</td>
 <td>direct</td>
 </tr>
@@ -321,6 +328,12 @@
 <tr>
 <td><a href="../CellMarkerData/">CellMarkerData</a></td>
 <td><a href="../marker_sets/">marker_sets</a></td>
+<td>range</td>
+<td><a href="./">MarkerSet</a></td>
+</tr>
+<tr>
+<td><a href="../CellType/">CellType</a></td>
+<td><a href="../has_characterizing_marker_set/">has_characterizing_marker_set</a></td>
 <td>range</td>
 <td><a href="./">MarkerSet</a></td>
 </tr>
@@ -390,16 +403,6 @@ slots:
 - confidence_score
 - precision
 - recall
-slot_usage:
-  name:
-    name: name
-    description: Name of the marker set, often derived from component marker names
-      (e.g., "CD3+CD4+CD8+ T cell markers")
-    required: true
-tree_root: true
-rules:
-- description: Marker set names should typically incorporate the names of component
-    markers joined with '+' or similar notation when appropriate
 
 </code></pre>
 </details>
@@ -408,12 +411,6 @@ rules:
 <pre><code class="language-yaml">name: MarkerSet
 description: A named set of markers associated with an ontology class
 from_schema: https://example.org/cellmark
-slot_usage:
-  name:
-    name: name
-    description: Name of the marker set, often derived from component marker names
-      (e.g., "CD3+CD4+CD8+ T cell markers")
-    required: true
 attributes:
   id:
     name: id
@@ -423,6 +420,7 @@ attributes:
     alias: id
     owner: MarkerSet
     domain_of:
+    - CellType
     - Marker
     - MarkerSet
     range: uriorcurie
@@ -461,7 +459,7 @@ attributes:
     owner: MarkerSet
     domain_of:
     - MarkerSet
-    range: uriorcurie
+    range: Marker
     multivalued: true
   derived_from_markers:
     name: derived_from_markers
@@ -516,10 +514,6 @@ attributes:
     range: float
     minimum_value: 0.0
     maximum_value: 1.0
-tree_root: true
-rules:
-- description: Marker set names should typically incorporate the names of component
-    markers joined with '+' or similar notation when appropriate
 
 </code></pre>
 </details>

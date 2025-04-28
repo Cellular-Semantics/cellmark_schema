@@ -365,6 +365,7 @@
 
 
 <h1 id="slot-name">Slot: name</h1>
+<p><em>Name of the marker set, often derived from component marker names (e.g., "CD3+CD4+CD8+ T cell markers")</em></p>
 <p>URI: <a href="https://example.org/marker-sets/name">ms:name</a>
 Alias: name</p>
 <!-- no inheritance hierarchy -->
@@ -382,7 +383,7 @@ Alias: name</p>
 <tr>
 <td><a href="../MarkerSet/">MarkerSet</a></td>
 <td>A named set of markers associated with an ontology class</td>
-<td>yes</td>
+<td>no</td>
 </tr>
 <tr>
 <td><a href="../Marker/">Marker</a></td>
@@ -428,6 +429,8 @@ Alias: name</p>
 <details>
 
 <pre><code class="language-yaml">name: name
+description: Name of the marker set, often derived from component marker names (e.g.,
+  &quot;CD3+CD4+CD8+ T cell markers&quot;)
 from_schema: https://example.org/cellmark
 rank: 1000
 alias: name

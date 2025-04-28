@@ -230,6 +230,15 @@
     click Axiom href "../Axiom"
 
 
+      CellMarkerData : cell_types
+
+
+
+
+    CellMarkerData --&gt; "*" CellType : cell_types
+    click CellType href "../CellType"
+
+
       CellMarkerData : marker_sets
 
 
@@ -262,6 +271,12 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><a href="../cell_types/">cell_types</a></td>
+<td>* <br/> <a href="../CellType/">CellType</a></td>
+<td></td>
+<td>direct</td>
+</tr>
 <tr>
 <td><a href="../markers/">markers</a></td>
 <td>* <br/> <a href="../Marker/">Marker</a></td>
@@ -316,6 +331,7 @@ description: 'A document that holds all markers, marker sets, and axioms.
   '
 from_schema: https://example.org/cellmark
 slots:
+- cell_types
 - markers
 - marker_sets
 - axioms
@@ -331,6 +347,17 @@ description: 'A document that holds all markers, marker sets, and axioms.
   '
 from_schema: https://example.org/cellmark
 attributes:
+  cell_types:
+    name: cell_types
+    from_schema: https://example.org/cellmark
+    rank: 1000
+    alias: cell_types
+    owner: CellMarkerData
+    domain_of:
+    - CellMarkerData
+    range: CellType
+    multivalued: true
+    inlined_as_list: true
   markers:
     name: markers
     from_schema: https://example.org/cellmark
