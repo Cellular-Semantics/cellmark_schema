@@ -38,6 +38,14 @@ ms:marker_CD8neg a ms:Marker ;
     ms:description "Absence of CD8 marker" ;
     ms:name "CD8-negative" .
 
+ms:marker_CD3 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD3" ;
+    ms:name "CD3" .
+
+ms:marker_CD4 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD4" ;
+    ms:name "CD4" .
+
 ms:marker_set_CD19_CD20_CD22 a ms:MarkerSet ;
     BFO:0000051 ms:marker_CD19,
         ms:marker_CD20,
@@ -71,29 +79,21 @@ ms:marker_set_CD3_CD4_CD8neg a ms:MarkerSet ;
     ms:precision "0.97"^^xsd:float ;
     ms:recall "0.93"^^xsd:float .
 
-ms:marker_CD3 a ms:Marker ;
-    ms:description "T-cell surface glycoprotein CD3" ;
-    ms:name "CD3" .
-
-ms:marker_CD4 a ms:Marker ;
-    ms:description "T-cell surface glycoprotein CD4" ;
-    ms:name "CD4" .
-
 [] a ms:CellMarkerData ;
     ms:axioms [ a owl:Axiom ;
             owl:annotatedProperty "RO:0015004"^^xsd:anyURI ;
-            owl:annotatedSource "CL:0000084"^^xsd:anyURI ;
-            owl:annotatedTarget "ms:marker_set_CD3_CD4_CD8"^^xsd:anyURI ;
+            owl:annotatedSource CL:0000084 ;
+            owl:annotatedTarget ms:marker_set_CD3_CD4_CD8 ;
             ms:annotation_confidence "0.94"^^xsd:float ],
         [ a owl:Axiom ;
             owl:annotatedProperty "RO:0015004"^^xsd:anyURI ;
-            owl:annotatedSource "CL:0000492"^^xsd:anyURI ;
-            owl:annotatedTarget "ms:marker_set_CD3_CD4_CD8neg"^^xsd:anyURI ;
+            owl:annotatedSource CL:0000492 ;
+            owl:annotatedTarget ms:marker_set_CD3_CD4_CD8neg ;
             ms:annotation_confidence "0.96"^^xsd:float ],
         [ a owl:Axiom ;
             owl:annotatedProperty "RO:0015004"^^xsd:anyURI ;
-            owl:annotatedSource "CL:0000236"^^xsd:anyURI ;
-            owl:annotatedTarget "ms:marker_set_CD19_CD20_CD22"^^xsd:anyURI ;
+            owl:annotatedSource CL:0000236 ;
+            owl:annotatedTarget ms:marker_set_CD19_CD20_CD22 ;
             ms:annotation_confidence "0.9"^^xsd:float ] ;
     ms:cell_types CL:0000084,
         CL:0000236,

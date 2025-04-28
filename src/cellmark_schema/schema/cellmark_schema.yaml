@@ -16,6 +16,9 @@ prefixes:
   RO: http://purl.obolibrary.org/obo/RO_
   IAO: http://purl.obolibrary.org/obo/IAO_
   CL: http://purl.obolibrary.org/obo/CL_
+  PCL: http://purl.obolibrary.org/obo/PCL_
+  obo: http://purl.obolibrary.org/obo/
+  custom: http://example.org/
   ms: https://example.org/marker-sets/
 
 imports:
@@ -44,12 +47,10 @@ classes:
       - has_characterizing_marker_set
     slot_usage:
       id:
-        pattern: "^CL:[0-9]{7}$"  # Pattern to match CL identifiers
-        examples:
-          - value: "CL:0000084"
-            description: "T cell"
-          - value: "CL:0000236"
-            description: "B cell"
+        range: uriorcurie
+        identifier: true
+        required: true
+        pattern: "^CL:[0-9]{7}$"
 
   Marker:
     description: A specific marker that can be part of a marker set
@@ -78,7 +79,7 @@ classes:
       - annotated_property
       - annotated_target
       - annotation_confidence
-    
+
 slots:
   cell_types:
     range: CellType
@@ -129,7 +130,7 @@ slots:
 
   annotated_source:
     description: The source entity being annotated
-    range: uriorcurie
+    range: CellType
     slot_uri: owl:annotatedSource
     required: true
   
@@ -145,7 +146,7 @@ slots:
     
   annotated_target:
     description: The target of the annotation
-    range: uriorcurie
+    range: MarkerSet
     slot_uri: owl:annotatedTarget
     required: true
       
