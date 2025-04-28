@@ -1,5 +1,19 @@
 # Example instances using the Cell Marker LinkML schema
 
+cell_types:
+  - id: "CL:0000084"
+    label: "T cell"
+    has_characterizing_marker_set: "ms:marker_set_CD3_CD4_CD8"
+  
+  - id: "CL:0000236" 
+    label: "B cell"
+    has_characterizing_marker_set: "ms:marker_set_CD19_CD20_CD22"
+  
+  - id: "CL:0000492"
+    label: "CD4-positive helper T cell"
+    has_characterizing_marker_set: "ms:marker_set_CD3_CD4_CD8neg"
+
+
 markers:
   - id: "ms:marker_CD3"
     name: "CD3"
@@ -68,16 +82,16 @@ marker_sets:
 
 axioms:
   - annotated_source: "CL:0000084"
-    annotated_property: "ms:has_marker_set"
+    annotated_property: "RO:0015004"
     annotated_target: "ms:marker_set_CD3_CD4_CD8"
     annotation_confidence: 0.94
 
   - annotated_source: "CL:0000236"
-    annotated_property: "ms:has_marker_set"
+    annotated_property: "RO:0015004"
     annotated_target: "ms:marker_set_CD19_CD20_CD22"
     annotation_confidence: 0.90
 
   - annotated_source: "CL:0000492"
-    annotated_property: "ms:has_marker_set"
+    annotated_property: "RO:0015004"
     annotated_target: "ms:marker_set_CD3_CD4_CD8neg"
     annotation_confidence: 0.96

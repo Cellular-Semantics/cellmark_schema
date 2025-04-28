@@ -13,6 +13,7 @@ prefixes:
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   xsd: http://www.w3.org/2001/XMLSchema#
   BFO: http://purl.obolibrary.org/obo/BFO_
+  RO: http://purl.obolibrary.org/obo/RO_
   IAO: http://purl.obolibrary.org/obo/IAO_
   CL: http://purl.obolibrary.org/obo/CL_
   ms: https://example.org/marker-sets/
@@ -29,9 +30,26 @@ classes:
       A document that holds all markers, marker sets, and axioms.
     tree_root: true
     slots:
+      - cell_types
       - markers
       - marker_sets
       - axioms
+
+  CellType:
+    description: "A reference to a Cell Ontology (CL) term"
+    class_uri: owl:Class
+    slots:
+      - id
+      - label
+      - has_characterizing_marker_set
+    slot_usage:
+      id:
+        pattern: "^CL:[0-9]{7}$"  # Pattern to match CL identifiers
+        examples:
+          - value: "CL:0000084"
+            description: "T cell"
+          - value: "CL:0000236"
+            description: "B cell"
 
   Marker:
     description: A specific marker that can be part of a marker set
@@ -51,17 +69,6 @@ classes:
       - confidence_score
       - precision
       - recall
-    slot_usage:
-      name:
-        description: >-
-          Name of the marker set, often derived from component marker names
-          (e.g., "CD3+CD4+CD8+ T cell markers")
-        required: true
-    rules:
-      - description: >-
-          Marker set names should typically incorporate the names of component markers
-          joined with '+' or similar notation when appropriate
-    tree_root: true
         
   Axiom:
     description: An OWL axiom representing a marker set annotation
@@ -73,6 +80,11 @@ classes:
       - annotation_confidence
     
 slots:
+  cell_types:
+    range: CellType
+    multivalued: true
+    inlined_as_list: true
+
   markers:
     range: Marker
     multivalued: true
@@ -88,12 +100,21 @@ slots:
     multivalued: true
     inlined_as_list: true
 
+  label:
+    description: "A human-readable name for something"
+    range: string
+    required: true
+    slot_uri: rdfs:label
+
   id:
     identifier: true
     range: uriorcurie
     required: true
     
   name:
+    description: >-
+      Name of the marker set, often derived from component marker names
+      (e.g., "CD3+CD4+CD8+ T cell markers")
     range: string
     required: true
     
@@ -113,10 +134,14 @@ slots:
     required: true
   
   annotated_property:
-    description: The annotation property being used
+    description: The annotation property being used (has_characterizing_marker_set)
     range: uriorcurie
     slot_uri: owl:annotatedProperty
     required: true
+    pattern: "^RO:0015004$"  # Restricts to only this specific relation
+    examples:
+      - value: "RO:0015004"
+        description: "has characterizing marker set"
     
   annotated_target:
     description: The target of the annotation
@@ -127,7 +152,7 @@ slots:
   has_part:
     description: Relates a marker set to its component markers
     domain: MarkerSet
-    range: uriorcurie
+    range: Marker
     multivalued: true
     slot_uri: BFO:0000051  # BFO has_part relation
     
@@ -164,3 +189,11 @@ slots:
     range: boolean
     annotations:
       owl: AnnotationProperty
+
+  has_characterizing_marker_set:
+    description: "Relates a cell type to a marker set that has been experimentally validated"
+    domain: CellType
+    range: MarkerSet
+    slot_uri: RO:0015004
+    annotations:
+      owl: ObjectProperty
