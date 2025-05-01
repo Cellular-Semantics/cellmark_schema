@@ -26,31 +26,33 @@ imports:
 
 default_prefix: ms
 
+enums:
+  CellTypeEnum:
+    reachable_from:
+      source_ontology: obo:cl
+      source_nodes:
+        - CL:0000000
+      include_self: true
+      relationship_types:
+        - rdfs:subClassOf
+
 classes:
-
-  CellMarkerData:
-    description: |
-      A document that holds all markers, marker sets, and axioms.
+  Container:
     tree_root: true
-    slots:
-      - cell_types
-      - markers
-      - marker_sets
-      - axioms
-
+    description: A container for lists of axioms
+    attributes:
+      axioms:
+        range: Axiom
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        
   CellType:
     description: "A reference to a Cell Ontology (CL) term"
     class_uri: owl:Class
     slots:
-      - id
+      - cell_type_id
       - label
-      - has_characterizing_marker_set
-    slot_usage:
-      id:
-        range: uriorcurie
-        identifier: true
-        required: true
-        pattern: "^CL:[0-9]{7}$"
 
   Marker:
     description: A specific marker that can be part of a marker set
@@ -81,26 +83,9 @@ classes:
       - annotation_confidence
 
 slots:
-  cell_types:
-    range: CellType
-    multivalued: true
-    inlined_as_list: true
-
-  markers:
-    range: Marker
-    multivalued: true
-    inlined_as_list: true
+  cell_type_id:
+    range: CellTypeEnum
     
-  marker_sets:
-    range: MarkerSet
-    multivalued: true
-    inlined_as_list: true
-    
-  axioms:
-    range: Axiom
-    multivalued: true
-    inlined_as_list: true
-
   label:
     description: "A human-readable name for something"
     range: string
@@ -133,6 +118,8 @@ slots:
     range: CellType
     slot_uri: owl:annotatedSource
     required: true
+    inlined: true
+    inlined_as_list: false
   
   annotated_property:
     description: The annotation property being used (has_characterizing_marker_set)
@@ -149,6 +136,8 @@ slots:
     range: MarkerSet
     slot_uri: owl:annotatedTarget
     required: true
+    inlined: true
+    inlined_as_list: false
       
   has_part:
     description: Relates a marker set to its component markers
@@ -156,6 +145,7 @@ slots:
     range: Marker
     multivalued: true
     slot_uri: BFO:0000051  # BFO has_part relation
+    inlined: true
     
   confidence_score:
     description: Confidence score for the marker set or annotation
@@ -191,10 +181,11 @@ slots:
     annotations:
       owl: AnnotationProperty
 
-  has_characterizing_marker_set:
-    description: "Relates a cell type to a marker set that has been experimentally validated"
-    domain: CellType
-    range: MarkerSet
-    slot_uri: RO:0015004
-    annotations:
-      owl: ObjectProperty
+  # has_characterizing_marker_set:
+  #   description: "Relates a cell type to a marker set that has been experimentally validated"
+  #   domain: CellType
+  #   range: MarkerSet
+  #   slot_uri: RO:0015004
+  #   annotations:
+  #     owl: ObjectProperty
+      

@@ -1,97 +1,73 @@
 # Example instances using the Cell Marker LinkML schema
-
-cell_types:
-  - id: "CL:0000084"
-    label: "T cell"
-    has_characterizing_marker_set: "ms:marker_set_CD3_CD4_CD8"
-  
-  - id: "CL:0000236" 
-    label: "B cell"
-    has_characterizing_marker_set: "ms:marker_set_CD19_CD20_CD22"
-  
-  - id: "CL:0000492"
-    label: "CD4-positive helper T cell"
-    has_characterizing_marker_set: "ms:marker_set_CD3_CD4_CD8neg"
-
-
-markers:
-  - id: "ms:marker_CD3"
-    name: "CD3"
-    description: "T-cell surface glycoprotein CD3"
-  
-  - id: "ms:marker_CD4"
-    name: "CD4"
-    description: "T-cell surface glycoprotein CD4"
-    
-  - id: "ms:marker_CD8"
-    name: "CD8"
-    description: "T-cell surface glycoprotein CD8"
-    
-  - id: "ms:marker_CD19"
-    name: "CD19"
-    description: "B-lymphocyte antigen CD19"
-    
-  - id: "ms:marker_CD20"
-    name: "CD20"
-    description: "B-lymphocyte surface antigen B1"
-    
-  - id: "ms:marker_CD22"
-    name: "CD22"
-    description: "B-cell receptor CD22"
-    
-  - id: "ms:marker_CD8neg"
-    name: "CD8-negative"
-    description: "Absence of CD8 marker"
-
-marker_sets:
-  - id: "ms:marker_set_CD3_CD4_CD8"
-    name: "CD3+CD4+CD8+ marker set"
-    description: "Standard T cell markers including CD3, CD4, and CD8"
-    derived_from_markers: true
-    confidence_score: 0.92
-    precision: 0.95
-    recall: 0.89
-    has_part: 
-      - "ms:marker_CD3"
-      - "ms:marker_CD4"
-      - "ms:marker_CD8"
-
-  - id: "ms:marker_set_CD19_CD20_CD22"
-    name: "CD19+CD20+CD22+ marker set"
-    description: "Standard B cell markers including CD19, CD20, and CD22"
-    derived_from_markers: true
-    confidence_score: 0.88
-    precision: 0.91
-    recall: 0.85
-    has_part:
-      - "ms:marker_CD19"
-      - "ms:marker_CD20"
-      - "ms:marker_CD22"
-
-  - id: "ms:marker_set_CD3_CD4_CD8neg"
-    name: "CD3+CD4+CD8- marker set"
-    description: "Helper T cell marker pattern: CD3 and CD4 positive, CD8 negative"
-    derived_from_markers: true
-    confidence_score: 0.95
-    precision: 0.97
-    recall: 0.93
-    has_part:
-      - "ms:marker_CD3"
-      - "ms:marker_CD4"
-      - "ms:marker_CD8neg"
-
 axioms:
-  - annotated_source: "CL:0000084"
+  - annotated_source:
+      cell_type_id: "CL:0000084"
+      label: "T cell"
     annotated_property: "RO:0015004"
-    annotated_target: "ms:marker_set_CD3_CD4_CD8"
+    annotated_target:
+      id: "ms:marker_set_CD3_CD4_CD8"
+      name: "CD3+CD4+CD8+ marker set"
+      description: "Standard T cell markers including CD3, CD4, and CD8"
+      derived_from_markers: true
+      confidence_score: 0.92
+      precision: 0.95
+      recall: 0.89
+      has_part:
+        - id: "ms:marker_CD3"
+          name: "CD3"
+          description: "T-cell surface glycoprotein CD3"
+        - id: "ms:marker_CD4"
+          name: "CD4"
+          description: "T-cell surface glycoprotein CD4"
+        - id: "ms:marker_CD8"
+          name: "CD8"
+          description: "T-cell surface glycoprotein CD8"
     annotation_confidence: 0.94
 
-  - annotated_source: "CL:0000236"
+  - annotated_source:
+      cell_type_id: "CL:0000236"
+      label: "B cell"
     annotated_property: "RO:0015004"
-    annotated_target: "ms:marker_set_CD19_CD20_CD22"
+    annotated_target:
+      id: "ms:marker_set_CD19_CD20_CD22"
+      name: "CD19+CD20+CD22+ marker set"
+      description: "Standard B cell markers including CD19, CD20, and CD22"
+      derived_from_markers: true
+      confidence_score: 0.88
+      precision: 0.91
+      recall: 0.85
+      has_part:
+        - id: "ms:marker_CD19"
+          name: "CD19"
+          description: "B-lymphocyte antigen CD19"
+        - id: "ms:marker_CD20"
+          name: "CD20"
+          description: "B-lymphocyte surface antigen B1"
+        - id: "ms:marker_CD22"
+          name: "CD22"
+          description: "B-cell receptor CD22"
     annotation_confidence: 0.90
 
-  - annotated_source: "CL:0000492"
+  - annotated_source:
+      cell_type_id: "CL:0000492"
+      label: "CD4-positive helper T cell"
     annotated_property: "RO:0015004"
-    annotated_target: "ms:marker_set_CD3_CD4_CD8neg"
+    annotated_target:
+      id: "ms:marker_set_CD3_CD4_CD8neg"
+      name: "CD3+CD4+CD8- marker set"
+      description: "Helper T cell marker pattern: CD3 and CD4 positive, CD8 negative"
+      derived_from_markers: true
+      confidence_score: 0.95
+      precision: 0.97
+      recall: 0.93
+      has_part:
+        - id: "ms:marker_CD3"
+          name: "CD3"
+          description: "T-cell surface glycoprotein CD3"
+        - id: "ms:marker_CD4"
+          name: "CD4"
+          description: "T-cell surface glycoprotein CD4"
+        - id: "ms:marker_CD8neg"
+          name: "CD8-negative"
+          description: "Absence of CD8 marker"
     annotation_confidence: 0.96

@@ -1,22 +1,9 @@
 @prefix BFO: <http://purl.obolibrary.org/obo/BFO_> .
 @prefix CL: <http://purl.obolibrary.org/obo/CL_> .
-@prefix RO: <http://purl.obolibrary.org/obo/RO_> .
 @prefix ms: <https://example.org/marker-sets/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-CL:0000084 a owl:Class ;
-    rdfs:label "T cell" ;
-    RO:0015004 ms:marker_set_CD3_CD4_CD8 .
-
-CL:0000236 a owl:Class ;
-    rdfs:label "B cell" ;
-    RO:0015004 ms:marker_set_CD19_CD20_CD22 .
-
-CL:0000492 a owl:Class ;
-    rdfs:label "CD4-positive helper T cell" ;
-    RO:0015004 ms:marker_set_CD3_CD4_CD8neg .
 
 ms:marker_CD19 a ms:Marker ;
     ms:description "B-lymphocyte antigen CD19" ;
@@ -37,14 +24,6 @@ ms:marker_CD8 a ms:Marker ;
 ms:marker_CD8neg a ms:Marker ;
     ms:description "Absence of CD8 marker" ;
     ms:name "CD8-negative" .
-
-ms:marker_CD3 a ms:Marker ;
-    ms:description "T-cell surface glycoprotein CD3" ;
-    ms:name "CD3" .
-
-ms:marker_CD4 a ms:Marker ;
-    ms:description "T-cell surface glycoprotein CD4" ;
-    ms:name "CD4" .
 
 ms:marker_set_CD19_CD20_CD22 a ms:MarkerSet ;
     BFO:0000051 ms:marker_CD19,
@@ -79,33 +58,34 @@ ms:marker_set_CD3_CD4_CD8neg a ms:MarkerSet ;
     ms:precision "0.97"^^xsd:float ;
     ms:recall "0.93"^^xsd:float .
 
-[] a ms:CellMarkerData ;
+ms:marker_CD3 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD3" ;
+    ms:name "CD3" .
+
+ms:marker_CD4 a ms:Marker ;
+    ms:description "T-cell surface glycoprotein CD4" ;
+    ms:name "CD4" .
+
+[] a ms:Container ;
     ms:axioms [ a owl:Axiom ;
             owl:annotatedProperty "RO:0015004"^^xsd:anyURI ;
-            owl:annotatedSource CL:0000084 ;
-            owl:annotatedTarget ms:marker_set_CD3_CD4_CD8 ;
-            ms:annotation_confidence "0.94"^^xsd:float ],
+            owl:annotatedSource [ a owl:Class ;
+                    rdfs:label "B cell" ;
+                    ms:cell_type_id CL:0000236 ] ;
+            owl:annotatedTarget ms:marker_set_CD19_CD20_CD22 ;
+            ms:annotation_confidence "0.9"^^xsd:float ],
         [ a owl:Axiom ;
             owl:annotatedProperty "RO:0015004"^^xsd:anyURI ;
-            owl:annotatedSource CL:0000492 ;
+            owl:annotatedSource [ a owl:Class ;
+                    rdfs:label "CD4-positive helper T cell" ;
+                    ms:cell_type_id CL:0000492 ] ;
             owl:annotatedTarget ms:marker_set_CD3_CD4_CD8neg ;
             ms:annotation_confidence "0.96"^^xsd:float ],
         [ a owl:Axiom ;
             owl:annotatedProperty "RO:0015004"^^xsd:anyURI ;
-            owl:annotatedSource CL:0000236 ;
-            owl:annotatedTarget ms:marker_set_CD19_CD20_CD22 ;
-            ms:annotation_confidence "0.9"^^xsd:float ] ;
-    ms:cell_types CL:0000084,
-        CL:0000236,
-        CL:0000492 ;
-    ms:marker_sets ms:marker_set_CD19_CD20_CD22,
-        ms:marker_set_CD3_CD4_CD8,
-        ms:marker_set_CD3_CD4_CD8neg ;
-    ms:markers ms:marker_CD19,
-        ms:marker_CD20,
-        ms:marker_CD22,
-        ms:marker_CD3,
-        ms:marker_CD4,
-        ms:marker_CD8,
-        ms:marker_CD8neg .
+            owl:annotatedSource [ a owl:Class ;
+                    rdfs:label "T cell" ;
+                    ms:cell_type_id CL:0000084 ] ;
+            owl:annotatedTarget ms:marker_set_CD3_CD4_CD8 ;
+            ms:annotation_confidence "0.94"^^xsd:float ] .
 
